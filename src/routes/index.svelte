@@ -25,6 +25,7 @@
 <script lang="ts">
 	export let jsonPosts;
 
+	const posts = jsonPosts.posts;
 </script>
 
 <main>
