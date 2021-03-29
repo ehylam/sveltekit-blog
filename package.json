@@ -29,7 +29,9 @@
   "engines": {
     "node": ">= 12.17.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
   "description": "Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte);",
   "main": "index.js",
   "author": "",
