@@ -11,4 +11,6 @@ export default {
 		title: 'Third post!',
 		body: '<p>Fusce vitae tincidunt libero. Pellentesque nec efficitur velit. Nunc sit amet efficitur tellus. Etiam velit dui, commodo volutpat condimentum non, venenatis consequat neque. Phasellus lacinia quis felis eu tristique. Sed et tellus mi. Aliquam congue ex vitae elit fermentum, sed elementum lectus euismod. Nam vel rhoncus dui. Nunc vulputate maximus est vitae sodales. Aenean rhoncus at nisl efficitur ultricies. Donec id lectus et leo dignissim mattis. Cras nisi quam, mattis sed felis in, tempor ullamcorper felis.</p>'
 	}
+
+
 }

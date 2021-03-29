@@ -1,5 +1,6 @@
 import posts from './_posts';
 
+
 export function get({ params }) {
 // params is the value in [slug]
 	if (params.slug in posts) {
