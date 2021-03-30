@@ -1,5 +1,4 @@
 <script context="module">
-
 	export async function load({fetch}) {
 		const res = await fetch(`https://eric-portfolio.ghost.io/ghost/api/v3/content/posts/?key=0c0619aa6637854338d7d12d14`)
 		.then(res => {
@@ -33,7 +32,7 @@
 		{#each posts as post}
 		<li>
 			<a class="post" href="/blog/{post.slug}">
-				<img src="/static/images/{post.slug}.jpg">
+				<img src="static/images/{post.slug}.jpg">
 				<p>
 					{post.title}
 				</p>
