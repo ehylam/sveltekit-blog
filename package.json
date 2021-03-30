@@ -30,6 +30,7 @@
     "node": ">= 12.17.0"
   },
   "dependencies": {
+    "locomotive-scroll": "^4.1.1",
     "node-fetch": "^2.6.1",
     "three": "^0.126.1"
   },
