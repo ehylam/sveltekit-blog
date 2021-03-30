@@ -24,8 +24,8 @@
 
 <script lang="ts">
 	export let jsonPosts;
-
 	const posts = jsonPosts.posts;
+
 </script>
 
 <main>
@@ -35,9 +35,22 @@
 		{#each posts as post}
 		<li>
 			<a href="/blog/{post.slug}">
+				<div class="post__image" style="background-image: url({post.feature_image});"></div>
 				{post.title}
 			</a>
 		</li>
 		{/each}
 	</ul>
 </main>
+
+<style lang="scss">
+    canvas {
+        display: block;
+    }
+
+	.post__image {
+		background-size: cover;
+		background-position:center;
+		background-repeat: no-repeat;
+	}
+</style>

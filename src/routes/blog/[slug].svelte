@@ -2,7 +2,6 @@
 
 	export async function load({fetch, page}) {
 		let slug = page.params.slug;
-		console.log(slug);
 
 		const res = await fetch(`https://eric-portfolio.ghost.io/ghost/api/v3/content/posts/slug/${slug}/?key=0c0619aa6637854338d7d12d14`)
 		.then(res => {
@@ -27,8 +26,6 @@
 
 <script>
 	export let post;
-
-	console.log(post);
 </script>
 
 <svelte:head>
