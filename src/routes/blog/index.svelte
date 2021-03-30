@@ -25,6 +25,7 @@
 	export let jsonPosts;
 	const posts = jsonPosts.posts;
 
+	console.log(posts);
 </script>
 <section>
 	<h1>Posts</h1>
@@ -32,7 +33,7 @@
 		{#each posts as post}
 		<li>
 			<a class="post" href="/blog/{post.slug}">
-				<img src="static/images/{post.slug}.jpg">
+				<img src="{post.feature_image}">
 				<p>
 					{post.title}
 				</p>
