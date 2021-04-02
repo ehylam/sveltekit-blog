@@ -1,7 +1,15 @@
 <script>
     import Nav from '$lib/Nav.svelte';
     import Footer from '$lib/Footer.svelte';
+	import Animation from '$lib/animations.js';
+	import { onMount } from 'svelte';
 
+
+	onMount(() => {
+		const ThreeJs = new Animation({
+			dom: document.querySelector('.container')
+		});
+	})
 
 </script>
 
@@ -38,6 +46,16 @@
 	:global(p) {
 		margin: 2rem auto;
 		line-height: 1.35;
+	}
+
+	.container {
+		position: fixed;
+		width: 100vw;
+		height: 100vh;
+		left: 0;
+		top: 0;
+		z-index: -1;
+
 	}
 
 </style>
