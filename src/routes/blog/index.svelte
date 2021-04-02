@@ -24,8 +24,15 @@
 <script lang="ts">
 	export let jsonPosts;
 	const posts = jsonPosts.posts;
+	import Animation from '$lib/animations.js';
+	import { onMount } from 'svelte';
 
-	console.log(posts);
+	onMount(() => {
+		const ThreeJs = new Animation({
+			dom: document.querySelector('.container')
+		});
+	})
+
 </script>
 <main>
 	<div data-scroll>

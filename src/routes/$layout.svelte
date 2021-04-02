@@ -1,15 +1,7 @@
 <script>
     import Nav from '$lib/Nav.svelte';
     import Footer from '$lib/Footer.svelte';
-	import Animation from '$lib/animations.js';
-	import { onMount } from 'svelte';
 
-
-	onMount(() => {
-		const ThreeJs = new Animation({
-			dom: document.querySelector('.container')
-		});
-	})
 
 </script>
 

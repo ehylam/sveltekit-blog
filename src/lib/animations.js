@@ -188,10 +188,10 @@ export default class Sketch {
 
     setPosition() {
         this.imageStore.forEach(o => {
-            if(o.top < this.height) {
+            // if(o.top < this.height) {
                 o.mesh.position.y = this.currentScroll - o.top + this.height / 2 - o.height / 2;
                 o.mesh.position.x = o.left - this.width / 2 + o.width / 2;
-            }
+            // }
         })
     }
 
