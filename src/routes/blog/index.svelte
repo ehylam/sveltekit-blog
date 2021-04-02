@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({fetch}) {
-		const res = await fetch(`https://eric-portfolio.ghost.io/ghost/api/v3/content/posts/?key=0c0619aa6637854338d7d12d14`)
+		const res = await fetch(`https://eric-portfolio.ghost.io/ghost/api/v3/content/posts/?key=0c0619aa6637854338d7d12d14`,{mode: 'no-cors'})
 		.then(res => {
 				return res.json();
 			}
@@ -27,26 +27,40 @@
 
 	console.log(posts);
 </script>
-<section>
-	<h1>Posts</h1>
-	<ul>
-		{#each posts as post}
-		<li>
-			<a class="post" href="/blog/{post.slug}">
-				<img src="{post.feature_image}">
-				<p>
-					{post.title}
-				</p>
-			</a>
-		</li>
-		{/each}
-	</ul>
-</section>
-
+<main>
+	<div data-scroll>
+		<section>
+			<h1>Posts</h1>
+			<ul>
+				{#each posts as post}
+				<li>
+					<a class="post" href="/blog/{post.slug}">
+						<img src="{post.feature_image}" crossorigin="anonymous">
+						<p>
+							{post.title}
+						</p>
+					</a>
+				</li>
+				{/each}
+			</ul>
+		</section>
+	</div>
+</main>
+<div class="container"></div>
 <style lang="scss">
     canvas {
         display: block;
     }
+
+	.container {
+		position: fixed;
+		width: 100vw;
+		height: 100vh;
+		left: 0;
+		top: 0;
+		z-index: -1;
+
+	}
 
 	ul {
 		margin: 0;
@@ -75,6 +89,7 @@
 			// height: 100%;
 			object-fit: cover;
 			max-height: 500px;
+			opacity: 0;
 		}
 
 	}

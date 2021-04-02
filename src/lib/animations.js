@@ -1,33 +1,28 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 // import LocomotiveScroll from 'locomotive-scroll';
 
 import Scroll from "./scroll.js";
 
 
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-// import Shrine from "/static/images/shrine.jpg";
+// import Shrine from "/static/images/hello-world.jpg";
 
 const fragment = `
     uniform float time;
     varying float vNoise;
     varying vec2 vUv;
-    uniform sampler2D shrineTexture;
+    uniform sampler2D uImage;
 
     void main()	{
-        vec3 colour1 = vec3(1.,0.,0.);
-        vec3 colour2 = vec3(1.,1.,1.);
-        vec3 finalColour = mix(colour1,colour2,0.5*(vNoise + 1.));
-
         vec2 newUV = vUv;
 
-        newUV = vec2(newUV.x, newUV.y + 0.01*sin(newUV.x*10. + time));
+        vec4 imageView = texture2D(uImage, newUV);
 
-        vec4 shrineView = texture2D(shrineTexture, newUV);
-
-        // gl_FragColor = vec4(finalColour,1.);
         gl_FragColor = vec4(vUv,0.,1.);
-        // gl_FragColor = vec4(vNoise);
-        // gl_FragColor = shrineView + 0.5*vec4(vNoise);
+        // gl_FragColor = vec4(vNoise,0.,0.,1.);
+        gl_FragColor = imageView;
+        gl_FragColor.rgb += 0.03*vec3(vNoise);
     }
 `;
 
@@ -108,6 +103,8 @@ const vertex = `
     }
 
     uniform float time;
+    uniform vec2 hover;
+    uniform float hoverState;
     varying float vNoise;
     varying vec2 vUv;
 
@@ -115,22 +112,12 @@ const vertex = `
         float PI = 3.1415925;
         vec3 newposition = position;
 
-        // newposition.z += 0.1*sin((newposition.x + 0.25)*2.*PI);
+        float noise = cnoise(3.*vec3(position.x,position.y,position.z + time/30.));
 
-        float noise = cnoise(10.*vec3(position.x,position.y,position.z + time/10.));
+        float dist = distance(uv,hover);
+        newposition.z += hoverState*10.*sin(dist*10. + time);
 
-        // Center
-        // float dist = distance(uv,vec2(0.5));
-
-        // To center
-        // newposition.z += 0.1*sin(dist * 40.);
-
-        // From center
-        // newposition.z += 0.1*sin(dist * 20. + time);
-
-        newposition += 0.08*normal*noise;
-
-        vNoise = noise;
+        vNoise = hoverState*sin(dist*10. - time);
         vUv = uv;
 
         gl_Position = projectionMatrix * modelViewMatrix * vec4( newposition, 1.0 );
@@ -141,7 +128,7 @@ const cameraPos = 600;
 export default class Sketch {
 
     constructor(options) {
-        // this.time = 0;
+        this.time = 0;
         this.container = options.dom;
 
         // Sizing
@@ -171,16 +158,16 @@ export default class Sketch {
         this.images = [...document.querySelectorAll('a.post img')];
         this.currentScroll = 0; //Potential bug, some browsers reload the page and maintains the same scroll pos..
 
-        // this.scroll = new LocomotiveScroll({
-        //     el: document.querySelector('[data-scroll-container]'),
-        //     smooth: true
-        // });
+        // Effects
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
 
         this.scroll = new Scroll();
         this.addImages();
         this.setPosition();
         this.resize();
         this.setupResize();
+        this.mouseMovement();
         // this.addObjects();
         this.render();
 
@@ -206,17 +193,51 @@ export default class Sketch {
     }
 
     addImages() {
+
+        this.material = new THREE.ShaderMaterial({
+            uniforms: {
+                time: {value: 0},
+                uImage: {value: 0},
+                hover: {value: new THREE.Vector2(0.5,0.5)},
+                hoverState: {value: 0}
+                // shrineTexture: {value: new THREE.TextureLoader().load(Shrine)}
+            },
+            side: THREE.DoubleSide,
+            fragmentShader: fragment,
+            vertexShader: vertex,
+            // wireframe: true
+        })
+
+        this.materials = [];
+
         this.imageStore = this.images.map(img => {
             let bounds = img.getBoundingClientRect();
 
 
-            let geometry = new THREE.PlaneBufferGeometry(bounds.width, bounds.height, 1, 1);
+            let geometry = new THREE.PlaneBufferGeometry(bounds.width, bounds.height, 10, 10);
             let texture = new THREE.Texture(img);
             texture.needsUpdate = true;
 
-            let material = new THREE.MeshBasicMaterial({
-                map: texture
-            });
+            let material = this.material.clone();
+
+            img.addEventListener('mouseenter', () => {
+                gsap.to(material.uniforms.hoverState, {
+                    duration: 1,
+                    value: 1
+                })
+            })
+
+            img.addEventListener('mouseout', () => {
+                gsap.to(material.uniforms.hoverState, {
+                    duration: 1,
+                    value: 0
+                })
+            })
+
+            this.materials.push(material);
+
+            material.uniforms.uImage.value = texture;
+
             let mesh = new THREE.Mesh(geometry, material);
 
             this.scene.add(mesh);
@@ -239,6 +260,25 @@ export default class Sketch {
         })
     }
 
+    mouseMovement() {
+        window.addEventListener( 'mousemove', (event) => {
+            this.mouse.x = ( event.clientX / this.width ) * 2 - 1;
+            this.mouse.y = - ( event.clientY / this.height ) * 2 + 1;
+
+            this.raycaster.setFromCamera( this.mouse, this.camera );
+
+	        const intersects = this.raycaster.intersectObjects( this.scene.children );
+
+            if(intersects.length > 0) {
+
+                let obj = intersects[0].object;
+
+                obj.material.uniforms.hover.value = intersects[0].uv;
+            }
+
+        }, false );
+    }
+
     addObjects() {
         this.geometry = new THREE.PlaneBufferGeometry( 100, 100, 10, 10 );
         this.material = new THREE.MeshNormalMaterial();
@@ -251,7 +291,7 @@ export default class Sketch {
             side: THREE.DoubleSide,
             fragmentShader: fragment,
             vertexShader: vertex,
-            wireframe: true
+            // wireframe: true
         })
 
         this.mesh = new THREE.Mesh( this.geometry, this.material );
@@ -260,11 +300,15 @@ export default class Sketch {
     }
 
     render() {
-        // this.time += 0.05;
+        this.time += 0.05;
 
         this.scroll.render();
         this.currentScroll = this.scroll.scrollToRender;
         this.setPosition();
+
+        this.materials.forEach( m => {
+            m.uniforms.time.value = this.time;
+        })
 
 
         this.renderer.render( this.scene, this.camera );
