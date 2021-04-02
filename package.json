@@ -10,6 +10,7 @@
     "build:static": "ADAPTER=@sveltejs/adapter-static OPTIONS={} npm run build"
   },
   "devDependencies": {
+    "@sveltejs/adapter-netlify": "^1.0.0-next.4",
     "@sveltejs/adapter-node": "next",
     "@sveltejs/adapter-static": "^1.0.0-next.4",
     "@sveltejs/adapter-vercel": "^1.0.0-next.8",
@@ -33,8 +34,10 @@
     "node": ">= 12.17.0"
   },
   "dependencies": {
+    "gray-matter": "^4.0.2",
     "gsap": "^3.6.1",
     "locomotive-scroll": "^4.1.1",
+    "marked": "^2.0.1",
     "node-fetch": "^2.6.1",
     "three": "^0.126.1"
   },
