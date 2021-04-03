@@ -20,46 +20,43 @@
 	// }
 	// Setup post feed
 
-	export const prerender = true;
-	const slugRegex = /^(?:\d{3}-)([a-z-]+)(?:\.md)$/;
+	// export const prerender = true;
+    // export async function load({ page, session }) {
+    //     const { slug } = page.params;
+    //     const posts = session.posts;
 
-	// console.log(slugRegex);
-    export async function load({ page, session }) {
-        const { slug } = page.params;
-        const posts = session.posts;
+	// 	console.log(posts);
 
-		console.log(posts);
+    //     if (posts.length) {
+    //         return {
+    //             props: {
+    //                 posts: posts
+    //             },
+    //         };
+    //     } else {
+    //         return {
+    //             status: 404,
+    //             error: new Error('Not found'),
+    //         };
+    //     }
 
-        if (posts.length) {
-            return {
-                props: {
-                    posts: posts
-                },
-            };
-        } else {
-            return {
-                status: 404,
-                error: new Error('Not found'),
-            };
-        }
-
-    }
+    // }
 
 
 </script>
 
 <script>
-	import { onMount } from 'svelte';
+	// import { onMount } from 'svelte';
 
-	export let posts;
+	// export let posts;
 
-	import Animation from '$lib/animations.js';
+	// import Animation from '$lib/animations.js';
 
-	onMount(() => {
-		const ThreeJs = new Animation({
-			dom: document.querySelector('.container')
-		});
-	})
+	// onMount(() => {
+	// 	const ThreeJs = new Animation({
+	// 		dom: document.querySelector('.container')
+	// 	});
+	// })
 
 </script>
 <main>
@@ -67,7 +64,7 @@
 		<section>
 			<h1>Posts</h1>
 			<ul>
-				{#if posts}
+				<!-- {#if posts}
 					{#each posts as post}
 					<li>
 						<a class="post" href="/blog/{post.slug}">
@@ -78,7 +75,7 @@
 						</a>
 					</li>
 					{/each}
-				{/if}
+				{/if} -->
 			</ul>
 		</section>
 	</div>
