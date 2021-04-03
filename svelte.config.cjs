@@ -1,10 +1,16 @@
+const { mdsvex } = require('mdsvex');
+const mdsvexConfig = require('./mdsvex.config.cjs');
 const sveltePreprocess = require('svelte-preprocess');
-const adapter = require('@sveltejs/adapter-netlify');
+const adapter = require('@sveltejs/adapter-static');
 const pkg = require('./package.json');
 
 /** @type {import('@sveltejs/kit').Config} */
 module.exports = {
-	preprocess: sveltePreprocess(),
+	extensions: ['.svelte', ...mdsvexConfig.extensions],
+	preprocess: [
+		sveltePreprocess(),
+		mdsvex(mdsvexConfig)
+	],
 	kit: {
 		adapter: adapter(),
 		target: '#svelte',

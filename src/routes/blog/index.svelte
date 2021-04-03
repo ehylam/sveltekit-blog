@@ -1,4 +1,5 @@
 <script context="module">
+
 	// export async function load({fetch}) {
 	// 	const res = await fetch(`https://eric-portfolio.ghost.io/ghost/api/v3/content/posts/?key=0c0619aa6637854338d7d12d14`,{mode: 'no-cors'})
 	// 	.then(res => {
@@ -18,25 +19,79 @@
 
 	// }
 
-	export const prerender = true;
+	// export async function load({ fetch }) {
+	// 	const res = await fetch('/blog.json');
+	// 	console.log(res);
+	// 	return {
+	// 		props: {
+	// 			posts: await res
+	// 		}
+	// 	};
+	// }
 
-	export async function load({ fetch }) {
-		const res = await fetch('/blog.json');
-		console.log(res);
+
+	export const prerender = true;
+	const slugRegex = /^(?:\d{3}-)([a-z-]+)(?:\.md)$/;
+
+	// console.log(slugRegex);
+    export async function load({ page, session }) {
+        // const { slug } = page.params;
+        const pages = session.pages;
+
+		// console.log(slug);
+
+
+
 		return {
 			props: {
-				posts: await res
+				posts: pages
 			}
-		};
-	}
+		}
+        // const slugs = Object.fromEntries(
+        //     pages.map((page) => [page.filename.match(slugRegex)[1], page])
+        // );
 
+        // if (slug in slugs) {
+        //     const pages = Object.fromEntries(
+        //         await Promise.all(
+        //             Object.entries(import.meta.glob('/src/pages/*.svx')).map(
+        //                 async ([path, page]) => {
+        //                     const filename = path.split('/').pop();
+        //                     const slug = filename.match(slugRegex)[1];
+        //                     return [slug, page];
+        //                 }
+        //             )
+        //         )
+        //     );
+
+        //     const { default: Rendered } = await pages[slug]();
+
+        //     return {
+        //         props: {
+        //             title: slugs[slug].title,
+        //             description: slugs[slug].description,
+        //             Rendered,
+        //         },
+        //     };
+        // } else {
+        //     // not found
+        //     return {
+        //         status: 404,
+        //         error: new Error('Not found'),
+        //     };
+        // }
+    }
 
 </script>
 
-<script lang="ts">
+<script>
+
+	import { onMount } from 'svelte';
+
 	export let posts;
+
+	console.log(posts);
 	// import Animation from '$lib/animations.js';
-	// import { onMount } from 'svelte';
 
 	// onMount(() => {
 	// 	const ThreeJs = new Animation({

@@ -9,25 +9,27 @@
 //     }
 // }
 
-import fs from "fs";
-import path from "path";
-import grayMatter from "gray-matter";
+// import fs from "fs";
+// import path from "path";
+// import frontMatter from "@github-docs/frontmatter";
 
-const getAllPosts = () => fs.readdirSync("static/posts").map(fileName => {
-	const post = fs.readFileSync(path.resolve("static/posts", fileName), "utf-8");
+// const getAllPosts = () => fs.readdirSync("static/posts").map(fileName => {
+// 	const post = fs.readFileSync(path.resolve("static/posts", fileName), "utf-8");
 
-	return grayMatter(post).data;
+// 	return frontMatter(post).data;
+// frontMatter
+// });
 
-});
+// export function get(req, res) {
+// 	res.writeHead(200, {
+// 		"Content-Type": "application/json"
+// 	});
+// 	const posts = getAllPosts();
 
-export function get(req, res) {
-	res.writeHead(200, {
-		"Content-Type": "application/json"
-	});
-	const posts = getAllPosts();
+// 	console.log(posts);
 
-	console.log(posts);
+// 	res.end(JSON.stringify(posts));
 
-	res.end(JSON.stringify(posts));
+// }
 
-}
+
