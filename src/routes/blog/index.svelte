@@ -20,24 +20,46 @@
 	// }
 	// Setup post feed
 
+	export const prerender = true;
+	const slugRegex = /^(?:\d{3}-)([a-z-]+)(?:\.md)$/;
+
+	// console.log(slugRegex);
+    export async function load({ page, session }) {
+        const { slug } = page.params;
+        const posts = session.posts;
+
+		console.log(posts);
+
+        if (posts.length) {
+            return {
+                props: {
+                    posts: posts
+                },
+            };
+        } else {
+            return {
+                status: 404,
+                error: new Error('Not found'),
+            };
+        }
+
+    }
 
 
 </script>
 
 <script>
-
 	import { onMount } from 'svelte';
 
 	export let posts;
 
-	console.log(posts);
-	// import Animation from '$lib/animations.js';
+	import Animation from '$lib/animations.js';
 
-	// onMount(() => {
-	// 	const ThreeJs = new Animation({
-	// 		dom: document.querySelector('.container')
-	// 	});
-	// })
+	onMount(() => {
+		const ThreeJs = new Animation({
+			dom: document.querySelector('.container')
+		});
+	})
 
 </script>
 <main>
@@ -45,18 +67,18 @@
 		<section>
 			<h1>Posts</h1>
 			<ul>
-				<!-- {#if posts}
+				{#if posts}
 					{#each posts as post}
 					<li>
 						<a class="post" href="/blog/{post.slug}">
-							<img src="{post.feature_image}" crossorigin="anonymous">
+							<img src="static{post.featured_image}" alt="post">
 							<p>
 								{post.title}
 							</p>
 						</a>
 					</li>
 					{/each}
-				{/if} -->
+				{/if}
 			</ul>
 		</section>
 	</div>
@@ -103,8 +125,16 @@
 			width: 100%;
 			// height: 100%;
 			object-fit: cover;
-			max-height: 500px;
+			min-height: 500px;
 			opacity: 0;
+		}
+
+		a,p {
+			color: black;
+			text-decoration: none;
+			&:hover {
+				color: black;
+			}
 		}
 
 	}

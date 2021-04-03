@@ -79,7 +79,7 @@ export default class Sketch {
 
         this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
         this.renderer.setSize( this.width, this.height );
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); //perforamnce optimisations
+        // this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); //perforamnce optimisations
         this.container.appendChild( this.renderer.domElement );
 
         // Controls
@@ -120,7 +120,7 @@ export default class Sketch {
         this.renderer.setSize( this.width, this.height );
         this.camera.aspect = this.width/this.height;
         this.camera.updateProjectionMatrix();
-
+        this.render();
     }
 
     addImages() {
@@ -140,8 +140,9 @@ export default class Sketch {
         })
 
         this.materials = [];
-
+        let id = 0;
         this.imageStore = this.images.map(img => {
+            id++;
             let bounds = img.getBoundingClientRect();
 
 
@@ -176,6 +177,7 @@ export default class Sketch {
             this.scene.add(mesh);
 
             return {
+                id: id,
                 img: img,
                 mesh: mesh,
                 top: bounds.top,
@@ -186,11 +188,32 @@ export default class Sketch {
         })
     }
 
+    updateImages() {
+        this.images = [...document.querySelectorAll('a.post img')];
+        let id = 0;
+        this.images.forEach(img => {
+            let currentMesh = this.imageStore[id].mesh;
+            let bounds = img.getBoundingClientRect();
+
+            currentMesh.position.y = this.currentScroll - bounds.top + this.height / 2 - bounds.height / 2;
+            currentMesh.position.x = bounds.left - this.width / 2 + bounds.width / 2;
+
+            this.scene.add(currentMesh);
+
+            id++;
+        })
+    }
+
     setPosition() {
+
         this.imageStore.forEach(o => {
+
             // if(o.top < this.height) {
-                o.mesh.position.y = this.currentScroll - o.top + this.height / 2 - o.height / 2;
-                o.mesh.position.x = o.left - this.width / 2 + o.width / 2;
+                console.log(this.height);
+            o.mesh.position.y = this.currentScroll - o.top + this.height / 2 - o.height / 2;
+            o.mesh.position.x = o.left - this.width / 2 + o.width / 2;
+
+            this.scene.add(o.mesh);
             // }
         })
     }
@@ -240,16 +263,16 @@ export default class Sketch {
         this.scroll.render();
         this.currentScroll = this.scroll.scrollToRender;
 
-        if(Math.round(this.currentScroll) !== Math.round(this.previousScroll)) {
-            this.setPosition();
+        // if(Math.round(this.currentScroll) !== Math.round(this.previousScroll)) {
+        // }
 
-            this.materials.forEach( m => {
-                m.uniforms.time.value = this.time;
-            })
+        this.setPosition();
 
-            this.renderer.render( this.scene, this.camera );
+        this.materials.forEach( m => {
+            m.uniforms.time.value = this.time;
+        })
 
-        }
+        this.renderer.render( this.scene, this.camera );
 
         this.previousScroll = this.currentScroll
 

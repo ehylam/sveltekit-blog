@@ -25,7 +25,7 @@
 
 export async function getSession() {
 
-    const pages = await Promise.all(
+    const posts = await Promise.all(
       Object.entries(import.meta.glob('/src/posts/*.md')).map(
         async ([path, page]) => {
           const { metadata } = await page();
@@ -39,7 +39,7 @@ export async function getSession() {
     );
 
     return {
-      pages,
+      posts,
     };
 
   };
