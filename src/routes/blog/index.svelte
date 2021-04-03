@@ -1,37 +1,48 @@
 <script context="module">
-	export async function load({fetch}) {
-		const res = await fetch(`https://eric-portfolio.ghost.io/ghost/api/v3/content/posts/?key=0c0619aa6637854338d7d12d14`,{mode: 'no-cors'})
-		.then(res => {
-				return res.json();
-			}
-		);
+	// export async function load({fetch}) {
+	// 	const res = await fetch(`https://eric-portfolio.ghost.io/ghost/api/v3/content/posts/?key=0c0619aa6637854338d7d12d14`,{mode: 'no-cors'})
+	// 	.then(res => {
+	// 			return res.json();
+	// 		}
+	// 	);
 
-		try {
-			return {
-				props: {
-					jsonPosts: res
-				}
-			}
-		} catch(err) {
-			console.log(err);
-		}
+	// 	try {
+	// 		return {
+	// 			props: {
+	// 				jsonPosts: res
+	// 			}
+	// 		}
+	// 	} catch(err) {
+	// 		console.log(err);
+	// 	}
 
+	// }
+
+	export const prerender = true;
+
+	export async function load({ fetch }) {
+		const res = await fetch('/blog.json');
+		console.log(res);
+		return {
+			props: {
+				posts: await res
+			}
+		};
 	}
 
 
 </script>
 
 <script lang="ts">
-	export let jsonPosts;
-	const posts = jsonPosts.posts;
-	import Animation from '$lib/animations.js';
-	import { onMount } from 'svelte';
+	export let posts;
+	// import Animation from '$lib/animations.js';
+	// import { onMount } from 'svelte';
 
-	onMount(() => {
-		const ThreeJs = new Animation({
-			dom: document.querySelector('.container')
-		});
-	})
+	// onMount(() => {
+	// 	const ThreeJs = new Animation({
+	// 		dom: document.querySelector('.container')
+	// 	});
+	// })
 
 </script>
 <main>
@@ -39,16 +50,18 @@
 		<section>
 			<h1>Posts</h1>
 			<ul>
-				{#each posts as post}
-				<li>
-					<a class="post" href="/blog/{post.slug}">
-						<img src="{post.feature_image}" crossorigin="anonymous">
-						<p>
-							{post.title}
-						</p>
-					</a>
-				</li>
-				{/each}
+				<!-- {#if posts}
+					{#each posts as post}
+					<li>
+						<a class="post" href="/blog/{post.slug}">
+							<img src="{post.feature_image}" crossorigin="anonymous">
+							<p>
+								{post.title}
+							</p>
+						</a>
+					</li>
+					{/each}
+				{/if} -->
 			</ul>
 		</section>
 	</div>
