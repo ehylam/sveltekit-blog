@@ -1,7 +1,7 @@
 const { mdsvex } = require('mdsvex');
 const mdsvexConfig = require('./mdsvex.config.cjs');
 const sveltePreprocess = require('svelte-preprocess');
-const adapter = require('@sveltejs/adapter-static');
+const adapter = require('@sveltejs/adapter-netlify');
 const pkg = require('./package.json');
 
 /** @type {import('@sveltejs/kit').Config} */

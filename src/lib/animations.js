@@ -120,7 +120,6 @@ export default class Sketch {
         this.renderer.setSize( this.width, this.height );
         this.camera.aspect = this.width/this.height;
         this.camera.updateProjectionMatrix();
-        this.render();
     }
 
     addImages() {
@@ -207,13 +206,8 @@ export default class Sketch {
     setPosition() {
 
         this.imageStore.forEach(o => {
-
-            // if(o.top < this.height) {
-                console.log(this.height);
             o.mesh.position.y = this.currentScroll - o.top + this.height / 2 - o.height / 2;
             o.mesh.position.x = o.left - this.width / 2 + o.width / 2;
-
-            this.scene.add(o.mesh);
             // }
         })
     }
