@@ -18,27 +18,13 @@
 	// 	}
 
 	// }
+	// Setup post feed
 
-<<<<<<< HEAD
-=======
-	// export async function load({ fetch }) {
-	// 	const res = await fetch('/blog.json');
-	// 	console.log(res);
-	// 	return {
-	// 		props: {
-	// 			posts: await res
-	// 		}
-	// 	};
-	// }
-
-
->>>>>>> parent of 171a6bb... move specific post content retriever to correct file
 	export const prerender = true;
 	const slugRegex = /^(?:\d{3}-)([a-z-]+)(?:\.md)$/;
 
 	// console.log(slugRegex);
     export async function load({ page, session }) {
-<<<<<<< HEAD
         const { slug } = page.params;
         const posts = session.posts;
 
@@ -58,54 +44,7 @@
         }
 
     }
-=======
-        // const { slug } = page.params;
-        const pages = session.pages;
 
-		// console.log(slug);
->>>>>>> parent of 171a6bb... move specific post content retriever to correct file
-
-
-
-		return {
-			props: {
-				posts: pages
-			}
-		}
-        // const slugs = Object.fromEntries(
-        //     pages.map((page) => [page.filename.match(slugRegex)[1], page])
-        // );
-
-        // if (slug in slugs) {
-        //     const pages = Object.fromEntries(
-        //         await Promise.all(
-        //             Object.entries(import.meta.glob('/src/pages/*.svx')).map(
-        //                 async ([path, page]) => {
-        //                     const filename = path.split('/').pop();
-        //                     const slug = filename.match(slugRegex)[1];
-        //                     return [slug, page];
-        //                 }
-        //             )
-        //         )
-        //     );
-
-        //     const { default: Rendered } = await pages[slug]();
-
-        //     return {
-        //         props: {
-        //             title: slugs[slug].title,
-        //             description: slugs[slug].description,
-        //             Rendered,
-        //         },
-        //     };
-        // } else {
-        //     // not found
-        //     return {
-        //         status: 404,
-        //         error: new Error('Not found'),
-        //     };
-        // }
-    }
 
 </script>
 
