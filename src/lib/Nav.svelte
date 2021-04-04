@@ -9,6 +9,8 @@
 
 <style lang="scss">
     nav {
+        position: relative;
+        z-index: 999;
         a {
             color: black;
         }
