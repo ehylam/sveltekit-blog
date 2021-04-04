@@ -69,7 +69,7 @@
 					{#each posts as post}
 					<li>
 						<a class="post" href="/blog/{post.slug}">
-							<img src="static{post.featured_image}" alt="post">
+							<img src="{post.featured_image}" alt="post">
 							<p>
 								{post.title}
 							</p>
