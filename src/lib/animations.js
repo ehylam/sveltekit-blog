@@ -115,11 +115,13 @@ export default class Sketch {
     }
 
     resize() {
-        this.width = this.container.offsetWidth;
-        this.height = this.container.offsetHeight;
+        this.width = window.innerWidth;
+        this.height = window.innerHeight;
         this.renderer.setSize( this.width, this.height );
         this.camera.aspect = this.width/this.height;
         this.camera.updateProjectionMatrix();
+
+        this.updateImages();
     }
 
     addImages() {
@@ -139,7 +141,7 @@ export default class Sketch {
         })
 
         this.materials = [];
-        let id = 0;
+        let id = -1;
         this.imageStore = this.images.map(img => {
             id++;
             let bounds = img.getBoundingClientRect();
@@ -188,19 +190,20 @@ export default class Sketch {
     }
 
     updateImages() {
-        this.images = [...document.querySelectorAll('a.post img')];
-        let id = 0;
-        this.images.forEach(img => {
-            let currentMesh = this.imageStore[id].mesh;
-            let bounds = img.getBoundingClientRect();
+        // this.images = [...document.querySelectorAll('a.post img')];
+        for (let i = 0; i < this.scene.children.length; i++) {
+            const plane = this.scene.children[i];
+            const bounds = this.images[i].getBoundingClientRect();
+            plane.scale.set(bounds.width, bounds.height,1);
 
-            currentMesh.position.y = this.currentScroll - bounds.top + this.height / 2 - bounds.height / 2;
-            currentMesh.position.x = bounds.left - this.width / 2 + bounds.width / 2;
+            plane.position.y = (window.innerHeight / 2) - (bounds.top /2);
+            plane.position.x = (window.innerWidth / 2) - (bounds.left /2);
+        }
+        // this.imageStore.forEach(img => {
 
-            this.scene.add(currentMesh);
 
-            id++;
-        })
+        //     this.scene.add(img.mesh);
+        // })
     }
 
     setPosition() {
