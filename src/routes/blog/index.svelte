@@ -78,6 +78,10 @@
 				{/if}
 			</ul>
 		</section>
+
+		<section class="test">
+
+		</section>
 	</div>
 </main>
 <div class="container"></div>
@@ -124,10 +128,10 @@
 			width: 100%;
 			// height: 100%;
 			object-fit: cover;
-			min-height: 400px;
 			opacity: 0;
-		}
+			height: 500px;
 
+		}
 		a,p {
 			color: black;
 			text-decoration: none;
@@ -136,6 +140,15 @@
 			}
 		}
 
+		p {
+			margin: 20px 0 40px;;
+		}
+
+	}
+
+	.test {
+		height: 400px;
+		width: 100%;
 	}
 
 </style>

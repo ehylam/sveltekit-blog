@@ -218,7 +218,7 @@ export default class Sketch {
             console.log(o.top + " o top");
 
             o.mesh.position.x = bounds.left - window.innerWidth / 2 + bounds.width / 2;
-            o.mesh.position.y = this.currentScroll - bounds.top + window.innerHeight / 2 - bounds.height / 2;
+            o.mesh.position.y = this.currentScroll - o.top + window.innerHeight / 2 - bounds.height / 2;
 
             // }
         })
