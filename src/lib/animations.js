@@ -28,7 +28,7 @@ const fragment = `
         vec4 imageView = texture2D(uImage, newUV);
 
         gl_FragColor = f;
-        gl_FragColor.rgb += 0.03*vec3(vNoise);
+        gl_FragColor.rgb += 0.01*vec3(vNoise);
     }
 `;
 
@@ -79,7 +79,7 @@ export default class Sketch {
 
         this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
         this.renderer.setSize( this.width, this.height );
-        // this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); //perforamnce optimisations
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); //perforamnce optimisations
         this.container.appendChild( this.renderer.domElement );
 
         // Controls
@@ -89,6 +89,8 @@ export default class Sketch {
         this.images = [...document.querySelectorAll('a.post img')];
         this.currentScroll = 0; //Potential bug, some browsers reload the page and maintains the same scroll pos..
         this.previousScroll = 1;
+
+
         // Effects
         this.raycaster = new THREE.Raycaster();
         this.mouse = new THREE.Vector2();
@@ -99,14 +101,8 @@ export default class Sketch {
         this.resize();
         this.setupResize();
         this.mouseMovement();
-        // this.addObjects();
         this.render();
 
-
-        // window.addEventListener('scroll', () => {
-        //     this.currentScroll = window.scrollY;
-        //     this.setPosition();
-        // })
 
     }
 
@@ -115,13 +111,16 @@ export default class Sketch {
     }
 
     resize() {
+        this.updateImages();
+        this.currentScroll = this.scroll.scrollToRender;
         this.width = window.innerWidth;
         this.height = window.innerHeight;
         this.renderer.setSize( this.width, this.height );
         this.camera.aspect = this.width/this.height;
+        this.camera.fov = 2*Math.atan((this.height/2) / cameraPos ) * (180/Math.PI);
         this.camera.updateProjectionMatrix();
-
-        this.updateImages();
+        // this.setPosition();
+        this.updatePositions();
     }
 
     addImages() {
@@ -175,6 +174,8 @@ export default class Sketch {
 
             mesh.scale.set(bounds.width, bounds.height);
 
+            mesh.isPickable = true;
+            mesh.matrixAutoUpdate = true;
             this.scene.add(mesh);
 
             return {
@@ -190,27 +191,35 @@ export default class Sketch {
     }
 
     updateImages() {
-        // this.images = [...document.querySelectorAll('a.post img')];
+
         for (let i = 0; i < this.scene.children.length; i++) {
             const plane = this.scene.children[i];
             const bounds = this.images[i].getBoundingClientRect();
             plane.scale.set(bounds.width, bounds.height,1);
-
-            plane.position.y = (window.innerHeight / 2) - (bounds.top /2);
-            plane.position.x = (window.innerWidth / 2) - (bounds.left /2);
         }
-        // this.imageStore.forEach(img => {
 
+    }
 
-        //     this.scene.add(img.mesh);
-        // })
+    updatePositions() {
+        for (let i = 0; i < this.scene.children.length; i++) {
+            const plane = this.scene.children[i];
+            const bounds = this.images[i].getBoundingClientRect();
+
+            plane.position.x = bounds.left - window.innerWidth / 2 + bounds.width / 2;
+            plane.position.y = this.currentScroll - bounds.top + window.innerHeight / 2 - bounds.height / 2;
+        }
     }
 
     setPosition() {
 
         this.imageStore.forEach(o => {
-            o.mesh.position.y = this.currentScroll - o.top + this.height / 2 - o.height / 2;
-            o.mesh.position.x = o.left - this.width / 2 + o.width / 2;
+            const bounds = this.images[o.id].getBoundingClientRect();
+            console.log(bounds.top + " bounds");
+            console.log(o.top + " o top");
+
+            o.mesh.position.x = bounds.left - window.innerWidth / 2 + bounds.width / 2;
+            o.mesh.position.y = this.currentScroll - bounds.top + window.innerHeight / 2 - bounds.height / 2;
+
             // }
         })
     }
@@ -234,34 +243,32 @@ export default class Sketch {
         }, false );
     }
 
-    addObjects() {
-        this.geometry = new THREE.PlaneBufferGeometry( 100, 100, 10, 10 );
-        this.material = new THREE.MeshNormalMaterial();
+    // addObjects() {
+    //     this.geometry = new THREE.PlaneBufferGeometry( 100, 100, 10, 10 );
+    //     this.material = new THREE.MeshNormalMaterial();
 
-        this.material = new THREE.ShaderMaterial({
-            uniforms: {
-                time: {value: 0},
-                // shrineTexture: {value: new THREE.TextureLoader().load(Shrine)}
-            },
-            side: THREE.DoubleSide,
-            fragmentShader: fragment,
-            vertexShader: vertex,
-            // wireframe: true
-        })
+    //     this.material = new THREE.ShaderMaterial({
+    //         uniforms: {
+    //             time: {value: 0},
+    //             // shrineTexture: {value: new THREE.TextureLoader().load(Shrine)}
+    //         },
+    //         side: THREE.DoubleSide,
+    //         fragmentShader: fragment,
+    //         vertexShader: vertex,
+    //         // wireframe: true
+    //     })
 
-        this.mesh = new THREE.Mesh( this.geometry, this.material );
-        this.scene.add( this.mesh );
+    //     this.mesh = new THREE.Mesh( this.geometry, this.material );
+    //     this.scene.add( this.mesh );
 
-    }
+    // }
 
     render() {
         this.time += 0.05;
 
         this.scroll.render();
+        this.previousScroll = this.currentScroll
         this.currentScroll = this.scroll.scrollToRender;
-
-        // if(Math.round(this.currentScroll) !== Math.round(this.previousScroll)) {
-        // }
 
         this.setPosition();
 

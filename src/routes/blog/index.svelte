@@ -48,10 +48,9 @@
 
 <script>
 	import { onMount } from 'svelte';
+	import Animation from '$lib/animations.js';
 
 	export let posts;
-
-	import Animation from '$lib/animations.js';
 
 	onMount(() => {
 		const ThreeJs = new Animation({
@@ -85,6 +84,8 @@
 <style lang="scss">
     canvas {
         display: block;
+		height: 100%;
+		width: 100%;
     }
 
 	.container {
@@ -123,7 +124,7 @@
 			width: 100%;
 			// height: 100%;
 			object-fit: cover;
-			min-height: 500px;
+			min-height: 400px;
 			opacity: 0;
 		}
 
