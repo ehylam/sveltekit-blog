@@ -171,6 +171,7 @@
 			transform: translate(-50%,-50%);
 			margin: 0;
 			text-align: center;
+			pointer-events: none;
 		}
 
 	}

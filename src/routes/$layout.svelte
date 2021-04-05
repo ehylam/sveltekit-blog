@@ -17,7 +17,7 @@
         margin: 0;
         padding: 0;
 		background-color: rgb(12, 8, 10);
-		font-family: 'Cavian';
+		font-family: 'Rikiarregular';
 		color: rgb(226, 226, 226);
     }
 
@@ -26,15 +26,17 @@
 }
 
 	:global(h1,h2,h3,h4,h5) {
-		font-family: 'Zuralu';
+		font-family: 'Rikiarregular';
+		font-weight: 400;
 	}
+
 
 	:global(h1) {
 		font-size: 36px;
 		line-height: 1.2;
 		margin-bottom: 0.3em;
 		@media (min-width: 1024px) {
-			font-size: 48px;
+			font-size: 52px;
 		}
 	}
 
