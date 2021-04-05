@@ -8,7 +8,9 @@
 	<Footer/>
 <style lang="scss">
 	@import '../lib/typography';
-    * {
+    :global(*) {
+		margin: 0;
+		padding: 0;
         box-sizing: border-box;
     }
     :global(body) {
@@ -16,7 +18,61 @@
         padding: 0;
 		background-color: rgb(12, 8, 10);
 		font-family: 'Cavian';
+		color: rgb(226, 226, 226);
     }
+
+	:global(h1,h2,h3,h4,h5,a,p,span,input) {
+    color: rgb(226, 226, 226);
+}
+
+	:global(h1,h2,h3,h4,h5) {
+		font-family: 'Zuralu';
+	}
+
+	:global(h1) {
+		font-size: 36px;
+		line-height: 1.2;
+		margin-bottom: 0.3em;
+		@media (min-width: 1024px) {
+			font-size: 48px;
+		}
+	}
+
+	:global(h2) {
+		font-size: 24px;
+		line-height: 1.2;
+		margin-bottom: 0.5em;
+		@media (min-width: 1024px) {
+			font-size: 32px;
+		}
+	}
+
+	:global(h3) {
+		font-size: 20px;
+		line-height: 1.2;
+		margin-bottom: 0.5em;
+		@media (min-width: 1024px) {
+			font-size: 26px;
+		}
+	}
+
+	:global(h4) {
+		font-size: 18px;
+		line-height: 1.2;
+		margin-bottom: 0.5em;
+		@media (min-width: 1024px) {
+			font-size: 22px;
+		}
+	}
+
+	:global(p,a) {
+		font-size: 14px;
+		text-decoration: none;
+		margin-bottom: 1em;
+		@media (min-width: 1024px) {
+			font-size: 16px;
+		}
+	}
 
     :root {
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,

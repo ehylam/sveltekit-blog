@@ -40,20 +40,20 @@
 </script>
 <main>
 	<div data-scroll>
-		<section>
-			<h1>Work</h1>
-			<h2>Subheading</h2>
-			<h3>Smaller heading</h3>
-			<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam libero vel, debitis unde reiciendis sapiente aspernatur repudiandae ut expedita. Reprehenderit beatae magnam numquam deleniti velit porro ad quidem aut repellat omnis pariatur possimus adipisci, unde cumque laboriosam. Blanditiis sit dolorem ducimus saepe architecto velit mollitia reprehenderit! Similique maiores culpa blanditiis.</p>
+		<section class="hero">
+			<h1>This is a hero heading..</h1>
+		</section>
+		<section class="projects">
+			<h3 class="projects__heading">Work</h3>
 			<ul>
 				{#if posts}
 					{#each posts as post}
 					<li>
 						<a class="post" href="/work/{post.slug}">
 							<img src="{post.featured_image}" alt="post">
-							<p>
+							<h1>
 								{post.title}
-							</p>
+							</h1>
 						</a>
 					</li>
 					{/each}
@@ -84,17 +84,51 @@
 
 	}
 
+	.hero {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		// height: 100vh;
+
+		h1 {
+			text-align: center;
+		}
+	}
+
+	.projects {
+		margin: 0 30px;
+		@media (min-width: 1024px) {
+			margin: 0 75px;
+		}
+		 &__heading {
+		 }
+	}
+
 	ul {
-		margin: 0;
 		padding: 0;
+		margin: 50px 0;
 
 		li {
-			list-style: none;
-			max-width: 1280px;
-			margin: 0 auto;
+			position: relative;
 
-			&:last-child {
-				margin-right: 0;
+			list-style: none;
+			// margin: 0 15vw;
+
+			// &:nth-child(even) {
+			// 	margin-right: 0;
+			// }
+
+
+			&:nth-child(odd) {
+				a.post {
+					margin: 0 auto 0 0;
+				}
+			}
+
+			&:nth-child(even) {
+				a.post {
+					margin: 0 0 0 auto;
+				}
 			}
 		}
 	}
@@ -104,11 +138,19 @@
 		background-size: cover;
 		background-position:center;
 		background-repeat: no-repeat;
-		// height: auto;
+		padding: 50px 0;
+		max-width: calc(100% - 60px);
+
+		@media (min-width: 1024px) {
+			max-width: 65%;
+		}
+		@media (min-width: 1280px) {
+			max-width: 55%;
+		}
+
 
 		img {
 			width: 100%;
-			// height: 100%;
 			object-fit: cover;
 			opacity: 0;
 			height: 500px;
@@ -122,8 +164,13 @@
 			}
 		}
 
-		p {
-			margin: 20px 0 40px;;
+		h1 {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%,-50%);
+			margin: 0;
+			text-align: center;
 		}
 
 	}
