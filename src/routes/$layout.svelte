@@ -7,13 +7,15 @@
 		<slot></slot>
 	<Footer/>
 <style lang="scss">
+	@import '../lib/typography';
     * {
         box-sizing: border-box;
     }
     :global(body) {
         margin: 0;
         padding: 0;
-
+		background-color: rgb(12, 8, 10);
+		font-family: 'Cavian';
     }
 
     :root {
@@ -37,20 +39,6 @@
 
 	}
 
-
-
-	:global(h1) {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4rem;
-		font-weight: 100;
-		line-height: 1.1;
-	}
-
-	:global(p) {
-		margin: 2rem auto;
-		line-height: 1.35;
-	}
 
 	.container {
 		position: fixed;

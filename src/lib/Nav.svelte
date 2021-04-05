@@ -25,7 +25,7 @@
             width: 20px;
             height: 20px;
             border-radius: 100%;
-            background-color: rgb(44, 31, 44);
+            background-color: rgb(219, 219, 219);
         }
 
         &__menu {

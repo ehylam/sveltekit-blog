@@ -42,6 +42,9 @@
 	<div data-scroll>
 		<section>
 			<h1>Work</h1>
+			<h2>Subheading</h2>
+			<h3>Smaller heading</h3>
+			<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam libero vel, debitis unde reiciendis sapiente aspernatur repudiandae ut expedita. Reprehenderit beatae magnam numquam deleniti velit porro ad quidem aut repellat omnis pariatur possimus adipisci, unde cumque laboriosam. Blanditiis sit dolorem ducimus saepe architecto velit mollitia reprehenderit! Similique maiores culpa blanditiis.</p>
 			<ul>
 				{#if posts}
 					{#each posts as post}
@@ -112,10 +115,10 @@
 
 		}
 		a,p {
-			color: black;
+			color: white;
 			text-decoration: none;
 			&:hover {
-				color: black;
+				color: white;
 			}
 		}
 
