@@ -8,7 +8,6 @@
     </div>
     <div class="nav__menu">
         <a href="/">Home</a>
-        <a href="/blog">blog</a>
     </div>
 </nav>
 
