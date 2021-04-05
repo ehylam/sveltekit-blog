@@ -2,15 +2,11 @@
     import Nav from '$lib/Nav.svelte';
     import Footer from '$lib/Footer.svelte';
 
-
 </script>
-
-<Nav/>
-	<slot></slot>
-<Footer/>
-
-<style>
-
+	<Nav/>
+		<slot></slot>
+	<Footer/>
+<style lang="scss">
     * {
         box-sizing: border-box;
     }
@@ -23,6 +19,22 @@
     :root {
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
 			'Open Sans', 'Helvetica Neue', sans-serif;
+	}
+
+	canvas {
+        display: block;
+		height: 100%;
+		width: 100%;
+    }
+
+	.container {
+		position: fixed;
+		width: 100vw;
+		height: 100%;
+		left: 0;
+		top: 0;
+		z-index: -1;
+
 	}
 
 
