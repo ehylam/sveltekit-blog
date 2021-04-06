@@ -50,10 +50,14 @@
 					{#each posts as post}
 					<li>
 						<a class="post" href="/work/{post.slug}">
-							<img src="{post.featured_image}" alt="post">
-							<h1>
-								{post.title}
-							</h1>
+							<div class="post__wrap">
+								<img src="{post.featured_image}" alt="post">
+							</div>
+							<div class="post__content">
+								<h1>
+									{post.title}
+								</h1>
+							</div>
 						</a>
 					</li>
 					{/each}
@@ -88,7 +92,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		// height: 100vh;
+		height: 100vh;
 
 		h1 {
 			text-align: center;
@@ -109,52 +113,64 @@
 
 		li {
 			position: relative;
-
 			list-style: none;
-			// margin: 0 15vw;
 
-			// &:nth-child(even) {
-			// 	margin-right: 0;
-			// }
-
+			&:first-child {
+				a.post {
+					padding-top: 15px;
+				}
+			}
 
 			&:nth-child(odd) {
 				a.post {
-					margin: 0 auto 0 0;
+					flex-direction: row;
 				}
 			}
 
 			&:nth-child(even) {
 				a.post {
-					margin: 0 0 0 auto;
+					flex-direction: row-reverse;
 				}
 			}
 		}
 	}
 
 	.post {
-		display: block;
+		display: flex;
 		background-size: cover;
 		background-position:center;
 		background-repeat: no-repeat;
 		padding: 50px 0;
-		max-width: calc(100% - 60px);
+		@media (min-width: 768px) {
+			justify-content: space-between;
+
+
+		}
 
 		@media (min-width: 1024px) {
-			max-width: 65%;
+			// max-width: 65%;
 		}
 		@media (min-width: 1280px) {
-			max-width: 55%;
+			// max-width: 350px;
+		}
+
+		&__wrap {
+			flex-basis: calc(50% - 2.5vw);
+			img {
+				width: 100%;
+				object-fit: cover;
+				opacity: 0;
+				height: 100%;
+				max-height: 450px;
+			}
+		}
+
+		&__content {
+			flex-basis: calc(50% - 2.5vw);
 		}
 
 
-		img {
-			width: 100%;
-			object-fit: cover;
-			opacity: 0;
-			height: 500px;
 
-		}
 		a,p {
 			color: white;
 			text-decoration: none;
@@ -164,13 +180,7 @@
 		}
 
 		h1 {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%,-50%);
 			margin: 0;
-			text-align: center;
-			pointer-events: none;
 		}
 
 	}

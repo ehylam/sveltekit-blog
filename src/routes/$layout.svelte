@@ -7,7 +7,36 @@
 		<slot></slot>
 	<Footer/>
 <style lang="scss">
-	@import '../lib/typography';
+
+
+	@font-face {
+		font-family: 'Source Sans Pro';
+		src: url('../fonts/SourceSansPro-Bold.woff2') format('woff2'),
+			url('../fonts/SourceSansPro-Bold.woff') format('woff');
+		font-weight: bold;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Source Sans Pro';
+		src: url('../fonts/SourceSansPro-Regular.woff2') format('woff2'),
+			url('../fonts/SourceSansPro-Regular.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+    font-family: 'DM Serif Display';
+    src: url('../fonts/DMSerifDisplay-Regular.woff2') format('woff2'),
+        url('../fonts/DMSerifDisplay-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
     :global(*) {
 		margin: 0;
 		padding: 0;
@@ -16,17 +45,18 @@
     :global(body) {
         margin: 0;
         padding: 0;
-		background-color: rgb(12, 8, 10);
-		font-family: 'Rikiarregular';
-		color: rgb(226, 226, 226);
+		background-color: rgb(212, 212, 212);
+		font-family: 'Source Sans Pro';
+		color: rgb(12, 8, 10);
     }
 
 	:global(h1,h2,h3,h4,h5,a,p,span,input) {
-    color: rgb(226, 226, 226);
+    color: rgb(12, 8, 10);
+	font-weight: 400;
 }
 
 	:global(h1,h2,h3,h4,h5) {
-		font-family: 'Rikiarregular';
+		font-family: 'DM Serif Display';
 		font-weight: 400;
 	}
 
@@ -107,5 +137,7 @@
 		z-index: -1;
 
 	}
+
+
 
 </style>
