@@ -97,10 +97,10 @@ export default class Sketch {
 
         this.scroll = new Scroll();
         this.addImages();
-        this.setPosition();
         this.resize();
         this.setupResize();
         this.mouseMovement();
+        this.setPosition();
         this.render();
 
 
@@ -117,10 +117,9 @@ export default class Sketch {
         this.height = window.innerHeight;
         this.renderer.setSize( this.width, this.height );
         this.camera.aspect = this.width/this.height;
-        this.camera.fov = 2*Math.atan((this.height/2) / cameraPos ) * (180/Math.PI);
+        this.camera.fov = 2*Math.atan((window.innerHeight/2) / cameraPos ) * (180/Math.PI);
         this.camera.updateProjectionMatrix();
         // this.setPosition();
-        this.updatePositions();
     }
 
     addImages() {
@@ -191,7 +190,6 @@ export default class Sketch {
     }
 
     updateImages() {
-
         for (let i = 0; i < this.scene.children.length; i++) {
             const plane = this.scene.children[i];
             const bounds = this.images[i].getBoundingClientRect();
@@ -200,26 +198,18 @@ export default class Sketch {
 
     }
 
-    updatePositions() {
-        for (let i = 0; i < this.scene.children.length; i++) {
-            const plane = this.scene.children[i];
-            const bounds = this.images[i].getBoundingClientRect();
-
-            plane.position.x = bounds.left - window.innerWidth / 2 + bounds.width / 2;
-            plane.position.y = this.currentScroll - bounds.top + window.innerHeight / 2 - bounds.height / 2;
-        }
-    }
-
     setPosition() {
-
         this.imageStore.forEach(o => {
             const bounds = this.images[o.id].getBoundingClientRect();
 
-            o.mesh.position.x = bounds.left - window.innerWidth / 2 + bounds.width / 2;
-            o.mesh.position.y = this.currentScroll - o.top + window.innerHeight / 2 - bounds.height / 2;
+            console.log(this.currentScroll);
 
-            // }
+            o.mesh.position.x = bounds.left - window.innerWidth / 2 + bounds.width / 2;
+
+            // get the scroll position, subtract the image top, add the height of window and half it and subtract the image height and half.
+            o.mesh.position.y = - bounds.top  + window.innerHeight / 2 - bounds.height / 2;
         })
+
     }
 
     mouseMovement() {
@@ -241,25 +231,6 @@ export default class Sketch {
         }, false );
     }
 
-    // addObjects() {
-    //     this.geometry = new THREE.PlaneBufferGeometry( 100, 100, 10, 10 );
-    //     this.material = new THREE.MeshNormalMaterial();
-
-    //     this.material = new THREE.ShaderMaterial({
-    //         uniforms: {
-    //             time: {value: 0},
-    //             // shrineTexture: {value: new THREE.TextureLoader().load(Shrine)}
-    //         },
-    //         side: THREE.DoubleSide,
-    //         fragmentShader: fragment,
-    //         vertexShader: vertex,
-    //         // wireframe: true
-    //     })
-
-    //     this.mesh = new THREE.Mesh( this.geometry, this.material );
-    //     this.scene.add( this.mesh );
-
-    // }
 
     render() {
         this.time += 0.05;

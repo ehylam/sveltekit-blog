@@ -44,7 +44,7 @@
 			<h1>This is a hero heading..</h1>
 		</section>
 		<section class="projects">
-			<h3 class="projects__heading">Work</h3>
+			<h3 class="projects__heading">Personal projects</h3>
 			<ul>
 				{#if posts}
 					{#each posts as post}
@@ -106,7 +106,6 @@
 
 	ul {
 		padding: 0;
-		margin: 50px 0;
 
 		li {
 			position: relative;
