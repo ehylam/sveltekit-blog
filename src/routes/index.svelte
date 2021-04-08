@@ -28,6 +28,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import Animation from '$lib/animations.js';
+	import Hero from '$lib/components/Hero.svelte';
 
 	export let posts;
 
@@ -40,9 +41,7 @@
 </script>
 <main>
 	<div data-scroll>
-		<section class="hero">
-			<h1>This is a hero heading..</h1>
-		</section>
+		<Hero/>
 		<section class="projects">
 			<h3 class="projects__heading">Personal projects</h3>
 			<ul>
@@ -86,17 +85,6 @@
 		top: 0;
 		z-index: -1;
 
-	}
-
-	.hero {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
-
-		h1 {
-			text-align: center;
-		}
 	}
 
 	.projects {

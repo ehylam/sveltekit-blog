@@ -1,6 +1,8 @@
 <script>
-    import Nav from '$lib/Nav.svelte';
-    import Footer from '$lib/Footer.svelte';
+	import { onMount } from 'svelte';
+    import Nav from '$lib/components/Nav.svelte';
+    import Footer from '$lib/components/Footer.svelte';
+
 
 </script>
 	<Nav/>
@@ -56,6 +58,7 @@
 }
 
 	:global(h1,h2,h3,h4,h5) {
+		// font-family: 'DM Serif Display';
 		font-family: 'DM Serif Display';
 		font-weight: 400;
 	}
