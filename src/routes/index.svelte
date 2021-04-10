@@ -29,10 +29,10 @@
 	import { onMount } from 'svelte';
 	import Animation from '$lib/animations.js';
 	import Hero from '$lib/components/Hero.svelte';
-
 	export let posts;
 
 	onMount(() => {
+
 		const ThreeJs = new Animation({
 			dom: document.querySelector('.container')
 		});
