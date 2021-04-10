@@ -27,6 +27,7 @@ export default class TouchTexture {
 		this.initTexture();
 		if (options.debug) document.body.append(this.canvas);
 	}
+
   	// Initialize our canvas
 	initTexture() {
 		this.canvas = document.createElement("canvas");

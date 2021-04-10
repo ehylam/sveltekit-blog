@@ -41,7 +41,7 @@
 </script>
 <main>
 	<div data-scroll>
-		<Hero/>
+		<Hero heading="This is a heading..."/>
 		<section class="projects">
 			<h3 class="projects__heading">Personal projects</h3>
 			<ul>
