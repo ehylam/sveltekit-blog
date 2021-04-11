@@ -1,5 +1,5 @@
 <script>
-	import Heading from './Heading.svelte';
+	import Heading from './Post.svelte';
 	let i = 0;
 	export let heading = 'This is a hero heading..';
 	let textArr = heading.split('');
@@ -35,18 +35,14 @@
 
 <style lang="scss">
     .hero {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		// position: relative;
+		position: relative;
 		height: 100vh;
 		span {
                 display: inline-block;
                 position: relative;
+				overflow: hidden;
+				// pointer-events: none;
 
-				&.active {
-					overflow: hidden;
-				}
                 &.whitespace {
                     width: 1.2vw;
                 }

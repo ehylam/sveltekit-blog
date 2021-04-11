@@ -5,8 +5,6 @@
         const { slug } = page.params;
         const posts = session.posts;
 
-		console.log(posts);
-
         if (posts.length) {
             return {
                 props: {
@@ -29,10 +27,21 @@
 	import { onMount } from 'svelte';
 	import Animation from '$lib/animations.js';
 	import Hero from '$lib/components/Hero.svelte';
+	import Post from '$lib/components/Post.svelte';
 	export let posts;
 
-	onMount(() => {
+	let postsClone = JSON.parse(JSON.stringify(posts));
 
+	for (let i = 0; i < postsClone.length; i++) {
+		let post = postsClone[i];
+		post.id = i;
+		post.title = post.title.split('');
+	}
+
+	console.log(postsClone);
+
+
+	onMount(() => {
 		const ThreeJs = new Animation({
 			dom: document.querySelector('.container')
 		});
@@ -45,20 +54,28 @@
 		<section class="projects">
 			<h3 class="projects__heading">Personal projects</h3>
 			<ul>
-				{#if posts}
-					{#each posts as post}
-					<li>
-						<a class="post" href="/work/{post.slug}">
+				{#if postsClone}
+					{#each postsClone as post}
+					<Post let:hovering={active} postId={post.id}>
+						<a class='post post-{post.id}' href="/work/{post.slug}">
 							<div class="post__wrap">
 								<img src="{post.featured_image}" alt="post">
 							</div>
 							<div class="post__content">
 								<h1>
-									{post.title}
+									{#each post.title as letter}
+									<span class:active>
+										{#if letter == ' '}
+											<span class="whitespace"></span>
+										{:else}
+											<span>{letter}</span>
+										{/if}
+									</span>
+									{/each}
 								</h1>
 							</div>
 						</a>
-					</li>
+					</Post>
 					{/each}
 				{/if}
 			</ul>
@@ -92,35 +109,10 @@
 		@media (min-width: 1024px) {
 			margin: 0 75px;
 		}
-		 &__heading {
-		 }
 	}
 
 	ul {
 		padding: 0;
-
-		li {
-			position: relative;
-			list-style: none;
-
-			&:first-child {
-				a.post {
-					padding-top: 15px;
-				}
-			}
-
-			&:nth-child(odd) {
-				a.post {
-					flex-direction: row;
-				}
-			}
-
-			&:nth-child(even) {
-				a.post {
-					flex-direction: row-reverse;
-				}
-			}
-		}
 	}
 
 	.post {
@@ -128,18 +120,11 @@
 		background-size: cover;
 		background-position:center;
 		background-repeat: no-repeat;
-		padding: 50px 0;
+
 		@media (min-width: 768px) {
 			justify-content: space-between;
 
 
-		}
-
-		@media (min-width: 1024px) {
-			// max-width: 65%;
-		}
-		@media (min-width: 1280px) {
-			// max-width: 350px;
 		}
 
 		&__wrap {
@@ -154,18 +139,37 @@
 		}
 
 		&__content {
-			flex-basis: calc(50% - 2.5vw);
-		}
+			position: absolute;
+			width: 100%;
+			height: 100%;
 
+			h1 {
+				display: flex;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
 
-
-		a,p {
-			color: white;
-			text-decoration: none;
-			&:hover {
-				color: white;
+			span {
+				position: relative;
+				overflow: hidden;
+				display: inline-block;
+				&.whitespace {
+                    width: 2vw;
+                }
 			}
 		}
+
+
+
+		// a,p {
+		// 	color: #d4a346;
+		// 	text-decoration: none;
+		// 	&:hover {
+		// 		color: #d4a346;
+		// 	}
+		// }
 
 		h1 {
 			margin: 0;

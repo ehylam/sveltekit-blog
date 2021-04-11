@@ -49,13 +49,13 @@
         padding: 0;
 		background-color: rgb(212, 212, 212);
 		font-family: 'Source Sans Pro';
-		color: rgb(12, 8, 10);
+		color: #d4a346;
     }
 
 	:global(h1,h2,h3,h4,h5,a,p,span,input) {
-    color: rgb(12, 8, 10);
-	font-weight: 400;
-}
+		color: #d4a346;
+		font-weight: 400;
+	}
 
 	:global(h1,h2,h3,h4,h5) {
 		// font-family: 'DM Serif Display';
