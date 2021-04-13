@@ -1,52 +1,60 @@
 <script>
-	import Heading from './Post.svelte';
-	let i = 0;
-	export let heading = 'This is a hero heading..';
-	let textArr = heading.split('');
+	import { onMount } from 'svelte';
+	import gsap from 'gsap';
 
-	const splitHeading = splitText(textArr);
+	let hovering;
 
-	function splitText(textArr) {
-		let splitArr = textArr;
-		splitArr.forEach(letter => {
-			if(letter.indexOf(' ') >= 0) {
-				splitArr[i] = null;
-			}
-        i++;
-    	});
+	function enter() {
+		hovering = true;
+	}
 
-		return splitArr;
-    }
+	function leave() {
+		hovering = false;
+	}
+
+	onMount(() => {
+		gsap.from('.hero__heading span span', {
+			rotate: '-90deg',
+			ease: 'expo.inOut',
+			duration: 1.6,
+			delay: 0.4
+		})
+	})
+
 </script>
 
-<section class="hero" data-scroll-section>
-	<Heading let:hovering={active}>
-		{#each splitHeading as letter}
-			<span class:active>
-				{#if letter == null}
-					<span class="whitespace"></span>
-				{:else}
-					<span>{letter}</span>
-				{/if}
-			</span>
-		{/each}
-	</Heading>
+<section class="hero">
+	<div class="hero__heading" on:mouseenter={enter} on:mouseleave={leave} class:hovering>
+		<span><span>Heyoo,</span></span>
+		<span><span>Lorem, ipsum.</span></span>
+	</div>
 </section>
 
 <style lang="scss">
     .hero {
 		position: relative;
 		height: 100vh;
-		span {
-                display: inline-block;
-                position: relative;
-				overflow: hidden;
-				// pointer-events: none;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
 
-                &.whitespace {
-                    width: 1.2vw;
-                }
+		&__heading {
+
+		}
+
+		span {
+			display: block;
+			overflow: hidden;
+			span {
+				position: relative;
+				font-family: 'DM Serif Display';
+				font-size: 50px;
+				transform-origin: bottom right;
+				@media (min-width: 1024px) {
+					font-size: 64px;
+				}
 			}
+		}
 
 	}
 </style>

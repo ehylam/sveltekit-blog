@@ -1,35 +1,199 @@
 <script>
+    import { onMount } from 'svelte';
+    import { spring } from 'svelte/motion';
 
+    let navBounds;
+    // let holoBounds;
+    let hovering;
+    let menuOpen;
+
+    let coords = spring(
+        {
+            x: 30,
+			y: -30
+        },
+        {
+            stiffness: 0.04,
+            damping: 0.5
+        }
+    )
+
+
+
+    function setCirclePos() {
+        let navParent = document.querySelector('.nav');
+        // let navHolo = document.querySelector('.nav__holo');
+        navBounds = navParent.getBoundingClientRect();
+        // holoBounds = navHolo.getBoundingClientRect();
+
+        coords.set({
+			x: navBounds.width - 30 - 20,
+			y: 30
+		})
+    }
+
+	function handleMousemove(e) {
+		const {clientX, clientY} = e;
+        let boundsX = clientX - window.innerWidth + navBounds.width - 10;
+        let boundsY = clientY - 10;
+
+		coords.set({
+			x: boundsX,
+			y: boundsY
+		})
+
+        hovering = true;
+	}
+
+    function handleMouseout(e) {
+        setCirclePos()
+        hovering = false;
+    }
+
+    function handleMenu() {
+        menuOpen = !menuOpen;
+    }
+
+    // function handleCenterCircle() {
+    //     coords.set({
+	// 		x: navBounds.width - 30 - 20,
+	// 		y: 30
+	// 	})
+    // }
+
+    onMount(() => {
+        window.addEventListener('resize', setCirclePos);
+        setCirclePos()
+
+    })
 </script>
 
-<nav class="nav">
-    <div class="nav__circle">
+<nav on:mousemove={handleMousemove} on:mouseout={handleMouseout} class="{hovering ? 'nav chomped' : 'nav'}">
+    <div style="top: {$coords.y}px; left: {$coords.x}px" class="nav__circle">
         <span></span>
     </div>
-    <div class="nav__menu">
-        <a href="/">Home</a>
+
+    <div class="nav__holo" on:click={handleMenu}>
+
     </div>
 </nav>
+
+<div class="{menuOpen ? 'menu show' : 'menu'}">
+    <ul on:click={handleMenu}>
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <a href="/about">About</a>
+        </li>
+        <li>
+            <a href="/photos">Photos</a>
+        </li>
+    </ul>
+</div>
 
 <style lang="scss">
     .nav {
         position: fixed;
-        top: 10px;
-        right: 10px;
+        top: 0;
+        right: 0;
         z-index: 999;
+        width: 20vw;
+        height: 20vw;
+
+        // &.chomped {
+
+        // }
         a {
             color: black;
         }
 
         &__circle {
+            position: absolute;
             width: 20px;
             height: 20px;
             border-radius: 100%;
-            background-color: rgb(219, 219, 219);
+            background-color: #d4a346;
+            top: 30px;
+            left: calc(100% - 30px - 20px);
+            animation: fadeIn 2s ease;
+            // transition: border-radius 0.5s ease, transform 0.3s ease;
+
+            // &.chomped {
+            //     border-radius: 0;
+            //     transform: rotate(45deg);
+            // }
         }
 
-        &__menu {
-            display: none;
+        &__holo {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-radius: 100%;
+            border: 2px solid #d4a346;
+            top: 26px;
+            left: calc(100% - 28px - 26px);
+            transition: all 0.5s ease;
+            transform: rotate(0deg);
+            cursor: pointer;
+
+            &:hover {
+                border-radius: 0;
+                transform: rotate(45deg);
+            }
+
+        }
+    }
+
+.menu {
+    position: fixed;
+    top: 0;
+    right: 30px;
+    max-width: 30px;
+    max-height: 30px;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #252533;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 0;
+        margin: 0;
+        li {
+            list-style: none;
+
+            a {
+                font-size: 32px;
+                font-family: 'DM Serif Display';
+                @media (min-width: 768px) {
+                font-size: 48px;
+                }
+            }
+        }
+    }
+
+    &.show {
+        right: 0;
+        max-width: 100%;
+        max-height: 100%;
+        opacity: 1;
+        z-index: 888;
+    }
+}
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
         }
     }
 </style>

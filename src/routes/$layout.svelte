@@ -47,7 +47,7 @@
     :global(body) {
         margin: 0;
         padding: 0;
-		background-color: rgb(212, 212, 212);
+		background-color: #252533;
 		font-family: 'Source Sans Pro';
 		color: #d4a346;
     }
@@ -106,6 +106,13 @@
 		margin-bottom: 1em;
 		@media (min-width: 1024px) {
 			font-size: 16px;
+		}
+	}
+
+	:global(section) {
+		margin: 0 30px;
+		@media (min-width: 1024px) {
+			margin: 0 75px;
 		}
 	}
 

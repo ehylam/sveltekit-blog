@@ -53,7 +53,7 @@
 </script>
 <main>
 	<div data-scroll>
-		<Hero heading="This is a heading..."/>
+		<Hero/>
 		<section class="projects">
 			<h3 class="projects__heading">Personal projects</h3>
 			<ul>
@@ -83,12 +83,10 @@
 				{/if}
 			</ul>
 		</section>
-
-		<section class="test">
-
-		</section>
+		<footer>Eric Lam © 2021</footer>
 	</div>
 </main>
+
 <div class="container"></div>
 <style lang="scss">
     canvas {
@@ -108,9 +106,10 @@
 	}
 
 	.projects {
-		margin: 0 30px;
-		@media (min-width: 1024px) {
-			margin: 0 75px;
+		&__heading {
+			padding-bottom: 0.5em;
+			border-bottom: 1px solid #d4a346;
+			margin-bottom: 1.5em;
 		}
 	}
 
@@ -181,9 +180,12 @@
 
 	}
 
-	.test {
-		height: 400px;
-		width: 100%;
-	}
 
+footer {
+        width: 100%;
+        min-height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
