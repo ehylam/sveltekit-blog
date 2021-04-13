@@ -147,16 +147,17 @@ export default class Sketch {
             let texture = new THREE.Texture(img);
             texture.needsUpdate = true;
 
+
             let material = this.material.clone();
 
-            img.addEventListener('mouseenter', () => {
+            img.closest('a.post').parentNode.addEventListener('mouseenter', () => {
                 gsap.to(material.uniforms.hoverState, {
                     duration: 1,
                     value: 1
                 })
             })
 
-            img.addEventListener('mouseout', () => {
+            img.closest('a.post').parentNode.addEventListener('mouseout', () => {
                 gsap.to(material.uniforms.hoverState, {
                     duration: 1,
                     value: 0

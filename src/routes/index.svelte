@@ -1,3 +1,6 @@
+<!-- Todo -->
+<!-- Implement barba.js for seamless transiiton between index and {slug} page -->
+
 <script context="module">
 	export const prerender = true;
 
@@ -149,6 +152,7 @@
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
+				pointer-events: none;
 			}
 
 			span {

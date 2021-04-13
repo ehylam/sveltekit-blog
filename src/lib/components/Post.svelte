@@ -35,7 +35,7 @@
 
             headingLeave.to(`.post-${postId} span span`, {
                 duration: 0.2,
-                left: (postId % 2 == 0) ? '0100%' : '100%',
+                left: (postId % 2 == 0) ? '-100%' : '100%',
                 ease: 'linear'
             }).to(`.post-${postId} span span`, {
                 duration: 0,
