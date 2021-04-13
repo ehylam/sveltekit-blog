@@ -159,7 +159,7 @@
 				overflow: hidden;
 				display: inline-block;
 				&.whitespace {
-                    width: 2vw;
+                    width: 18px;
                 }
 			}
 		}

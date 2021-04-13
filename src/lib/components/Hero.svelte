@@ -13,8 +13,8 @@
 	}
 
 	onMount(() => {
-		gsap.from('.hero__heading span span', {
-			rotate: '-90deg',
+		gsap.to('.hero__heading span span', {
+			rotate: '0deg',
 			ease: 'expo.inOut',
 			duration: 1.6,
 			delay: 0.4
@@ -50,6 +50,7 @@
 				font-family: 'DM Serif Display';
 				font-size: 50px;
 				transform-origin: bottom right;
+				transform: rotate(-90deg);
 				@media (min-width: 1024px) {
 					font-size: 64px;
 				}
