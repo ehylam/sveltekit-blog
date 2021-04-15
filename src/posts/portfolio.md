@@ -3,16 +3,24 @@ featured_image: /uploads/vender.jpg
 slug: portfolio
 title: Portfolio
 ---
-**JS framework**
+* #### JS framework
 
-* Sveltekit
+  * Sveltekit
+* #### Content management
 
-**Content management**
-* NetlifyCMS
+  * NetlifyCMS
+* #### Site hosting
 
-**Site hosting**
-* Netlify
+  * Netlify
+  * Indented item
+* #### JavaScript Libraries
 
-**JavaScript Libraries**
-* GSAP
-* Three.js
+  * GSAP
+  * Three.js
+
+
+
+
+``Coming soon...
+
+Steps and process in creating this project. . .``
