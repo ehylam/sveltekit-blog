@@ -12,13 +12,10 @@ title: Portfolio
 * #### Site hosting
 
   * Netlify
-  * Indented item
 * #### JavaScript Libraries
 
   * GSAP
   * Three.js
 
-
-
-``Coming soon...
-Steps and process in creating this project. . .``
+`Coming soon...
+Steps and process in creating this project. . .`
