@@ -20,7 +20,5 @@ title: Portfolio
 
 
 
-
 ``Coming soon...
-
 Steps and process in creating this project. . .``
