@@ -232,11 +232,8 @@ export default class Sketch {
         this.time += 0.05;
 
         this.scroll.render();
-        // this.previousScroll = this.currentScroll
-        // this.currentScroll = this.scroll.scrollToRender;
 
         this.setPosition();
-
         this.materials.forEach( m => {
             m.uniforms.time.value = this.time;
         })

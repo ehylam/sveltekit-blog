@@ -52,12 +52,15 @@
 
 <article>
     <img src="{featured_image}" alt="post">
-    <h2>{title}</h2>
+    <h1>{title}</h1>
     <Rendered/>
 </article>
 
 <style lang="scss">
-
+    article {
+        width: 70vw;
+        margin: 0 auto;
+    }
     img {
         width: 100%;
         max-height: 45vh;

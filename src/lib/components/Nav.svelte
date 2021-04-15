@@ -69,11 +69,11 @@
 </script>
 
 <nav on:mousemove={handleMousemove} on:mouseout={handleMouseout} class="{hovering ? 'nav chomped' : 'nav'}">
-    <div style="top: {$coords.y}px; left: {$coords.x}px" class="nav__circle">
+    <div style="top: {$coords.y}px; left: {$coords.x}px" class="{menuOpen ? 'nav__circle active' : 'nav__circle' }">
         <span></span>
     </div>
 
-    <div class="nav__holo" on:click={handleMenu}>
+    <div class="{menuOpen ? 'nav__holo active' : 'nav__holo'}" on:click={handleMenu}>
 
     </div>
 </nav>
@@ -123,6 +123,10 @@
             //     border-radius: 0;
             //     transform: rotate(45deg);
             // }
+
+            &.active {
+                animation: borderAnimate 8s ease infinite;
+            }
         }
 
         &__holo {
@@ -140,6 +144,11 @@
             &:hover {
                 border-radius: 0;
                 transform: rotate(45deg);
+            }
+
+            &.active {
+                animation: borderAnimate 8s ease infinite;
+
             }
 
         }
@@ -194,6 +203,28 @@
 
         100% {
             opacity: 1;
+        }
+    }
+
+    @keyframes borderAnimate {
+        0% {
+            border-radius: 100%;
+        }
+
+        25% {
+            border-radius: 44% 56% 51% 49% / 56% 37% 63% 44%;
+        }
+
+        50% {
+            border-radius: 51% 49% 55% 45% / 44% 55% 45% 56%;
+        }
+
+        75% {
+            border-radius: 59% 41% 46% 54% / 56% 52% 48% 44%;
+        }
+
+        100% {
+            border-radius: 100%;
         }
     }
 </style>

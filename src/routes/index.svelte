@@ -41,13 +41,13 @@
 		post.title = post.title.split('');
 	}
 
-	console.log(postsClone);
-
-
 	onMount(() => {
-		const ThreeJs = new Animation({
-			dom: document.querySelector('.container')
-		});
+
+		setTimeout(function() {
+			const ThreeJs = new Animation({
+				dom: document.querySelector('.container')
+			});
+		},400)
 	})
 
 </script>
