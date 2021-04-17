@@ -52,14 +52,32 @@
 
 <article>
     <img src="{featured_image}" alt="post">
-    <h1>{title}</h1>
-    <Rendered/>
+    <div class="wrapper">
+        <div class="heading">
+            <h1>{title}</h1>
+        </div>
+        <div class="content">
+            <Rendered/>
+        </div>
+    </div>
 </article>
 
 <style lang="scss">
     article {
         width: 70vw;
         margin: 0 auto;
+
+        .wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 3vw 0;
+
+            .heading,.content {
+                @media (min-width: 768px) {
+                flex-basis: 50%;
+                }
+            }
+        }
     }
     img {
         width: 100%;
@@ -69,4 +87,26 @@
     :global(p) {
         margin-bottom: 5px;
     }
+
+    :global(ul) {
+        margin: 0;
+        padding: 0;
+        &:first-child {
+            margin-bottom: 2vw;
+        }
+
+        :global(li) {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            @media (max-width: 768px) {
+                flex-direction: column;
+            }
+
+            :global(h4) {
+                flex-basis: 50%;
+            }
+        }
+    }
+
 </style>

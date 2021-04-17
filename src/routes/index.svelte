@@ -130,7 +130,9 @@
 		}
 
 		&__wrap {
-			flex-basis: calc(50% - 2.5vw);
+			@media (min-width: 968px) {
+				flex-basis: calc(50% - 2.5vw);
+			}
 			img {
 				width: 100%;
 				object-fit: cover;

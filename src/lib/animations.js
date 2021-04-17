@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import Scroll from "./scroll.js";
 
+// TODO:
+// Animation opimizations for mobile -meaning, disable them..
+
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 // import Shrine from "/static/images/hello-world.jpg";
 

@@ -2,15 +2,24 @@
     import { onMount } from 'svelte';
     import { spring } from 'svelte/motion';
 
+    let scrollY;
+    let documentHeight = 0;
     let navBounds;
     // let holoBounds;
     let hovering;
     let menuOpen;
+    let navX = 75;
+    let navY = 45;
+
+    let scrollPercentage = 0;
+
+    $: scrollPercentage = (scrollY  / documentHeight) * 100;
+
 
     let coords = spring(
         {
-            x: 30,
-			y: -30
+            x: navX,
+			y: -navY
         },
         {
             stiffness: 0.04,
@@ -20,15 +29,24 @@
 
 
 
+
     function setCirclePos() {
         let navParent = document.querySelector('.nav');
         // let navHolo = document.querySelector('.nav__holo');
         navBounds = navParent.getBoundingClientRect();
         // holoBounds = navHolo.getBoundingClientRect();
 
+        if(window.innerWidth < 1024) {
+            navX = 30;
+            navY = 30;
+        } else {
+            navX = 75;
+            navY = 45;
+        }
+
         coords.set({
-			x: navBounds.width - 30 - 20,
-			y: 30
+			x: navBounds.width - navX - 20,
+			y: navY
 		})
     }
 
@@ -63,11 +81,19 @@
 
     onMount(() => {
         window.addEventListener('resize', setCirclePos);
-        setCirclePos()
+
+        documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+        setCirclePos();
 
     })
+
 </script>
 
+<svelte:window bind:scrollY/>
+
+
+<a href="/" class="logo">Eric Lam<span>🗻</span></a>
 <nav on:mousemove={handleMousemove} on:mouseout={handleMouseout} class="{hovering ? 'nav chomped' : 'nav'}">
     <div style="top: {$coords.y}px; left: {$coords.x}px" class="{menuOpen ? 'nav__circle active' : 'nav__circle' }">
         <span></span>
@@ -93,6 +119,27 @@
 </div>
 
 <style lang="scss">
+    .logo {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        z-index: 999;
+        font-weight: bold;
+
+        @media (min-width: 1024px) {
+            top: 45px;
+            left: 75px;
+        }
+
+        span {
+            position: relative;
+            z-index: 998;
+            line-height: 0.8;
+            font-size: 20px;
+            transition: all 0.3s cubic-bezier(0.70, 0, 0.4, 1);
+        }
+
+    }
     .nav {
         position: fixed;
         top: 0;
@@ -114,8 +161,8 @@
             height: 20px;
             border-radius: 100%;
             background-color: #d4a346;
-            top: 30px;
-            left: calc(100% - 30px - 20px);
+            top: 45px;
+            left: calc(100% - 75 - 20px);
             animation: fadeIn 2s ease;
             // transition: border-radius 0.5s ease, transform 0.3s ease;
 
@@ -140,6 +187,11 @@
             transition: all 0.5s ease;
             transform: rotate(0deg);
             cursor: pointer;
+
+            @media (min-width: 1024px) {
+                top: 41px;
+                left: calc(100% - 73px - 26px);
+            }
 
             &:hover {
                 border-radius: 0;
