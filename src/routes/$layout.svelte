@@ -1,9 +1,15 @@
 <script>
-	import { onMount } from 'svelte';
+    import { afterUpdate } from 'svelte';
     import Nav from '$lib/components/Nav.svelte';
     import Footer from '$lib/components/Footer.svelte';
 
-
+    afterUpdate(() => {
+        const hasProjects = document.querySelector('.projects');
+        if(!hasProjects) {
+            const bodyEl = document.querySelector('body');
+            bodyEl.removeAttribute('style');
+        }
+    })
 </script>
 	<Nav/>
 		<slot></slot>
@@ -69,7 +75,7 @@
 		line-height: 1.2;
 		margin-bottom: 0.3em;
 		@media (min-width: 1024px) {
-			font-size: 52px;
+			font-size: 65px;
 		}
 	}
 

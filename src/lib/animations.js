@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import Scroll from "./scroll.js";
 
+console.log('test');
 // TODO:
 // Animation opimizations for mobile -meaning, disable them..
 

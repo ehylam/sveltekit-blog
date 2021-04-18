@@ -50,10 +50,11 @@
 		},400)
 	})
 
+
 </script>
 <main>
 	<div data-scroll>
-		<Hero/>
+		<Hero titleArr={["Heyoo,", "Lorem ipsum dolor."]}/>
 		<section class="projects">
 			<h3 class="projects__heading">Personal projects</h3>
 			<ul>

@@ -125,6 +125,7 @@
         left: 30px;
         z-index: 999;
         font-weight: bold;
+        mix-blend-mode: difference;
 
         @media (min-width: 1024px) {
             top: 45px;
@@ -147,7 +148,7 @@
         z-index: 999;
         width: 20vw;
         height: 20vw;
-
+        mix-blend-mode: difference;
         // &.chomped {
 
         // }

@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import gsap from 'gsap';
 
+	export let titleArr = ['This is a','default title.'];
 	let hovering;
 
 	function enter() {
@@ -17,7 +18,8 @@
 			rotate: '0deg',
 			ease: 'expo.inOut',
 			duration: 1.6,
-			delay: 0.4
+			delay: 0.4,
+			stagger: 0.07
 		})
 	})
 
@@ -25,8 +27,11 @@
 
 <section class="hero">
 	<div class="hero__heading" on:mouseenter={enter} on:mouseleave={leave} class:hovering>
-		<span><span>Heyoo,</span></span>
-		<span><span>Lorem, ipsum.</span></span>
+		{#if titleArr.length}
+			{#each titleArr as title}
+				<span><span>{title}</span></span>
+			{/each}
+		{/if}
 	</div>
 </section>
 
