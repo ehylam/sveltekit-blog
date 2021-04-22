@@ -5,15 +5,17 @@ import gsap from 'gsap';
 const vertexShader = `
     uniform float time;
     uniform vec2 uFrequency;
-
+    uniform float hoverState;
     attribute float aRandom;
 
     varying float vRandom;
+    varying vec2 vUv;
 
     void main() {
+        float x = hoverState;
         vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-        modelPosition.z += sin(modelPosition.x * uFrequency.x + time) * 0.1;
-        modelPosition.z += sin(modelPosition.y * uFrequency.y + time) * 0.1;
+        modelPosition.z += x * sin(modelPosition.x * uFrequency.x + time) * 0.1;
+        modelPosition.z += x * sin(modelPosition.y * uFrequency.y + time) * 0.1;
 
         // modelPosition.z += aRandom * sin(time) * 0.1;
         vec4 viewPosition = viewMatrix * modelPosition;
@@ -22,19 +24,26 @@ const vertexShader = `
         gl_Position = projectedMatrix;
 
         vRandom = aRandom;
+
+        vUv = uv;
     }
 `;
 
 
 const fragmentShader = `
     uniform float time;
+    uniform sampler2D uTexture;
+
     precision mediump float;
 
+    varying vec2 vUv;
     varying float vRandom;
 
     void main() {
+
+        vec4 textureColor = texture2D(uTexture, vUv);
         // gl_FragColor = vec4(vRandom * sin(time), vRandom * 0.5 * sin(time), 0.1, 1.0);
-        gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+        gl_FragColor = textureColor;
     }
 `;
 
@@ -43,7 +52,7 @@ export default class Playground {
     constructor(options) {
         this.time = 0;
         this.container = options.dom;
-
+        this.el = document.querySelector('.nav__holo');
         // Sizing
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
@@ -64,7 +73,7 @@ export default class Playground {
         this.addObject();
         this.resize();
         this.setupResize();
-        this.mouseMovement();
+        // this.mouseMovement();
         this.render();
 
 
@@ -85,7 +94,8 @@ export default class Playground {
 
 
     addObject() {
-
+        this.texture = new THREE.TextureLoader();
+        const image = this.texture.load('/static/uploads/32.jpg');
         this.geometry = new THREE.PlaneBufferGeometry(1,1,32,32);
         const count = this.geometry.attributes.position.count;
 
@@ -95,17 +105,18 @@ export default class Playground {
             randoms[i] = Math.random();
         }
 
+        this.texture.needsUpdate = true;
+
         this.geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
 
-
-        console.log(this.geometry);
         this.material = new THREE.ShaderMaterial({
             uniforms: {
                 time: {value: 0},
                 uImage: {value: 0},
-                hover: {value: new THREE.Vector2(0.5,0.5)},
+                uhover: {value: new THREE.Vector2(0.5,0.5)},
                 hoverState: {value: 0},
-                uFrequency: { value: new THREE.Vector2(10, 2)}
+                uFrequency: { value: new THREE.Vector2(10, 2)},
+                uTexture: { value: image }
             },
             side: THREE.DoubleSide,
             fragmentShader: fragmentShader,
@@ -113,7 +124,24 @@ export default class Playground {
             // wireframe: true
         })
 
-        this.mesh = new THREE.Mesh(this.geometry,this.material);
+
+        this.el.addEventListener('mouseenter', () => {
+            gsap.to(this.material.uniforms.hoverState, {
+                duration: 1,
+                value: 1
+            })
+        })
+
+
+        this.el.addEventListener('mouseleave', () => {
+            gsap.to(this.material.uniforms.hoverState, {
+                duration: 1,
+                value: 0
+            })
+        })
+
+
+        this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.scene.add(this.mesh);
     }
 
