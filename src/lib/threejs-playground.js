@@ -18,8 +18,8 @@ const vertexShader = `
         float x = hoverState;
         vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 
-        modelPosition.z += x * tan(modelPosition.x * uFrequency.x + time) * 0.02;
-        modelPosition.z += x * tan(modelPosition.y * uFrequency.y + time) * 0.02;
+        modelPosition.z += x * sin(modelPosition.x * uFrequency.x + time);
+        modelPosition.z += x * cos(modelPosition.y * uFrequency.y + time);
 
         // modelPosition.z += aRandom * sin(time) * 0.1;
         vec4 viewPosition = viewMatrix * modelPosition;
@@ -61,13 +61,14 @@ export default class Playground {
         // Sizing
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
-        this.cameraPos = 600;
+        this.cameraPos = 400;
 
         // Scene
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera( 70, this.width / this.height, 1, 2000 );
         this.camera.position.z = this.cameraPos;
         this.camera.fov = 2*Math.atan((this.height/2) / this.cameraPos ) * (180/Math.PI);
+
         // Renderer
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
         this.renderer.setSize( this.width, this.height );
@@ -105,7 +106,8 @@ export default class Playground {
     addObject() {
         // this.texture = new THREE.TextureLoader();
         // const image = this.texture.load('/static/uploads/32.jpg');
-        this.geometry = new THREE.CircleGeometry(1,28);
+        // this.geometry = new THREE.CircleGeometry(0.5,28);
+        this.geometry = new THREE.PlaneBufferGeometry(1,1,32,32);
         const count = this.geometry.attributes.position.count;
 
         const randoms = new Float32Array(count);
@@ -133,8 +135,13 @@ export default class Playground {
             // wireframe: true
         })
 
-
         this.el.addEventListener('mouseenter', () => {
+
+            gsap.to(this.mesh.rotation, {
+                duration: 1,
+                z: Math.PI / 0.7853981634
+            })
+
             gsap.to(this.material.uniforms.hoverState, {
                 duration: 1,
                 value: 1
@@ -143,6 +150,12 @@ export default class Playground {
 
 
         this.el.addEventListener('mouseleave', () => {
+            // this.mesh.rotation.z = Math.PI / 1;
+
+            gsap.to(this.mesh.rotation, {
+                duration: 1,
+                z: Math.PI / 1
+            })
             gsap.to(this.material.uniforms.hoverState, {
                 duration: 1,
                 value: 0
@@ -151,6 +164,8 @@ export default class Playground {
 
 
         this.mesh = new THREE.Mesh(this.geometry, this.material);
+
+        this.mesh.rotation.z = Math.PI / 1.5707963268;
         this.scene.add(this.mesh);
     }
 
@@ -158,10 +173,12 @@ export default class Playground {
         for (let i = 0; i < this.scene.children.length; i++) {
             const plane = this.scene.children[i];
             const bounds = this.el.getBoundingClientRect();
-
             console.log(bounds);
             plane.scale.set(bounds.width, bounds.height,1);
         }
+
+
+        console.log(this.scene.children);
     }
 
 
