@@ -56,6 +56,10 @@
 		background-color: #252533;
 		font-family: 'Source Sans Pro';
 		color: #d4a346;
+		font-size: 14px;
+		@media (min-width: 768px) {
+			font-size: 16px;
+		}
     }
 
 	:global(h1,h2,h3,h4,h5,a,p,span,input) {
@@ -71,48 +75,33 @@
 
 
 	:global(h1) {
-		font-size: 36px;
+		font-size: 2.8em;
 		line-height: 1.2;
 		margin-bottom: 0.3em;
-		@media (min-width: 1024px) {
-			font-size: 65px;
-		}
 	}
 
 	:global(h2) {
-		font-size: 24px;
+		font-size: 2em;
 		line-height: 1.2;
 		margin-bottom: 0.5em;
-		@media (min-width: 1024px) {
-			font-size: 32px;
-		}
 	}
 
 	:global(h3) {
-		font-size: 20px;
+		font-size: 1.5em;
 		line-height: 1.2;
 		margin-bottom: 0.5em;
-		@media (min-width: 1024px) {
-			font-size: 26px;
-		}
 	}
 
 	:global(h4) {
-		font-size: 18px;
+		font-size: 1.1em;
 		line-height: 1.2;
 		margin-bottom: 0.5em;
-		@media (min-width: 1024px) {
-			font-size: 22px;
-		}
 	}
 
 	:global(p,a) {
-		font-size: 14px;
+		font-size: 1em;
 		text-decoration: none;
 		margin-bottom: 1em;
-		@media (min-width: 1024px) {
-			font-size: 16px;
-		}
 	}
 
 	:global(section) {

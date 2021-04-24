@@ -77,18 +77,24 @@
                 flex-basis: 50%;
                 }
             }
+
+            .heading {
+                h1 {
+                    margin-bottom: 1em;
+                }
+            }
         }
     }
-    img {
+    :global(article img) {
         width: 100%;
         max-height: 45vh;
         object-fit: cover;
     }
-    :global(p) {
-        margin-bottom: 5px;
+    :global(article p) {
+        margin-bottom: 2em;
     }
 
-    :global(ul) {
+    :global(article ul) {
         margin: 0;
         padding: 0;
         &:first-child {

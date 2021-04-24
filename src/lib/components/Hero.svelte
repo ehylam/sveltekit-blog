@@ -53,12 +53,9 @@
 			span {
 				position: relative;
 				font-family: 'DM Serif Display';
-				font-size: 50px;
+				font-size: 4.5em;
 				transform-origin: bottom right;
 				transform: rotate(-90deg);
-				@media (min-width: 1024px) {
-					font-size: 64px;
-				}
 			}
 		}
 
