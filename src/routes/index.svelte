@@ -1,4 +1,6 @@
 <!-- Todo -->
+<!-- Test out clip-path -->
+<!-- GSAP animations - 'image transitions/ text transitions etc.' -->
 <!-- Implement barba.js for seamless transiiton between index and {slug} page -->
 
 <script context="module">
