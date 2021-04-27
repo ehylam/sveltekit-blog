@@ -32,7 +32,6 @@ export async function getSession() {
           const filename = path.split('/').pop();
           const slug = filename.slice(0, -3);
 
-          // console.log(metadata);
           return { ...metadata, filename, slug };
         }
       )

@@ -71,8 +71,14 @@ export default class Sketch {
 
         // Scene
         this.scene = new THREE.Scene();
+
+        // Camera
+        const frustumSize = 1;
         this.camera = new THREE.PerspectiveCamera( 70, this.width / this.height, 100, 2000 );
         this.camera.position.z = cameraPos;
+
+        // this.camera = new THREE.OrthographicCamera( frustumSize / - 2, frustumSize / 2, frustumSize / - 2, -1000, 1000 )
+        // this.camera.position.set(0, 0, 0);
 
         // Half of Window height divided by the distance between camera and canvas then convert to degrees
         this.camera.fov = 2*Math.atan((this.height/2) / cameraPos ) * (180/Math.PI);

@@ -65,9 +65,15 @@ export default class Playground {
 
         // Scene
         this.scene = new THREE.Scene();
+
+
+        // Camera
+        const frustumSize = 1;
         this.camera = new THREE.PerspectiveCamera( 70, this.width / this.height, 1, 2000 );
         this.camera.position.z = this.cameraPos;
         this.camera.fov = 2*Math.atan((this.height/2) / this.cameraPos ) * (180/Math.PI);
+        // this.camera = new THREE.OrthographicCamera( frustumSize / - 2, frustumSize / 2, frustumSize / - 2, -1000, 1000 )
+        // this.camera.position.set(0, 0, 2);
 
         // Renderer
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
