@@ -17,6 +17,7 @@ export function pannable(node) {
 	function handleMousemove(event) {
 		const dx = event.clientX - x;
 		const dy = event.clientY - y;
+		console.log(event.clientX);
 		x = event.clientX;
 		y = event.clientY;
 

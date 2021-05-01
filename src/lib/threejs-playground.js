@@ -59,6 +59,8 @@ export default class Playground {
         this.container = options.dom;
         this.el = document.querySelector('.nav__holo');
         // Sizing
+
+        console.log(this.container);
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
         this.cameraPos = 400;

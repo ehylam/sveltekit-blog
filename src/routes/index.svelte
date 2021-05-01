@@ -44,7 +44,6 @@
 	}
 
 	onMount(() => {
-
 		setTimeout(function() {
 			const ThreeJs = new Animation({
 				dom: document.querySelector('.container')

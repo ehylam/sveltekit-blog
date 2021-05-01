@@ -39,10 +39,14 @@
 <section class="about">
     <img src="" alt="" class="about__image">
 
-    <div class="about__content" use:pannable on:panstart={handlePanStart} on:panmove={handlePanMove} on:panend={handlePanEnd} 	style="transform:
-    translate({$coords.x}px,{$coords.y}px)
-    rotate({$coords.x * 0.2}deg)">
-        <h2>Hello! (Waving hand emoji here)</h2>
+
+    <div class="about__heading">
+        <h2>Hello!</h2>
+        <div class="handshake" use:pannable on:panstart={handlePanStart} on:panmove={handlePanMove} on:panend={handlePanEnd} 	style="transform:
+        translate({$coords.x}px,{$coords.y}px)
+        rotate({$coords.x * 0.2}deg)">👋</div>
+    </div>
+    <div class="about__content">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius maiores fuga consequatur quibusdam eaque qui ab quas quidem quod error!</p>
     </div>
 </section>
@@ -50,8 +54,15 @@
 <style lang="scss">
     .about {
         padding: 60px 0;
-        &__content {
-
+        &__heading {
+            h2 {
+                display: inline-block;
+            }
+            .handshake {
+                display: inline-block;
+                cursor: pointer;
+                font-size: 1.8em;
+            }
         }
 
     }
