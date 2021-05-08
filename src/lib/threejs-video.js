@@ -4,8 +4,10 @@ import image from '/images/texture.png';
 
 const vertexShader = `
 uniform float time;
+uniform float hoverState;
 varying vec2 vUv;
 varying vec3 vPosition;
+
 
 float PI = 3.141592653589793238;
 
@@ -82,7 +84,7 @@ vec3 curlNoise( vec3 p ){
 void main() {
   vUv = uv;
 
-  vec3 distortion = vec3(position)*curlNoise(vec3(position.x * 0.002 + time * 0.1,position.y * 0.008,0.));
+  vec3 distortion = hoverState * vec3(position.x * 2., position.y, 1.)*curlNoise(vec3(position.x * 0.002 + time * 0.05,position.y * 0.008,time*0.05));
   vec3 finalPosition = position + distortion;
 
   vec4 mvPosition = modelViewMatrix * vec4( finalPosition, 1 );
@@ -118,6 +120,7 @@ export default class Video {
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0xeeeeee, 1);
         this.container.appendChild(this.renderer.domElement);
+        this.el = document.querySelector('.nav__holo');
 
         this.camera = new THREE.PerspectiveCamera(
           70,
@@ -167,6 +170,7 @@ export default class Video {
             time: { value: 0 },
             texture: { value: new THREE.TextureLoader().load(image) },
             resolution: { value: new THREE.Vector4() },
+            hoverState: { value: 0 }
           },
           // wireframe: true,
           // transparent: true,
@@ -174,10 +178,26 @@ export default class Video {
           fragmentShader: fragmentShader
         });
 
-        this.geometry = new THREE.PlaneGeometry(480* 1.4, 400 * 1.4, 480, 400);
+        this.geometry = new THREE.PlaneGeometry(300* 1.4, 150 * 1.4, 300, 150);
 
         this.plane = new THREE.Points(this.geometry, this.material);
         this.scene.add(this.plane);
+
+        this.el.addEventListener('mouseenter', () => {
+          gsap.to(this.material.uniforms.hoverState, {
+              duration: 1,
+              value: 1
+          })
+      })
+
+
+      this.el.addEventListener('mouseleave', () => {
+          // this.mesh.rotation.z = Math.PI / 1;
+          gsap.to(this.material.uniforms.hoverState, {
+              duration: 1,
+              value: 0
+          })
+      })
       }
 
       stop() {
