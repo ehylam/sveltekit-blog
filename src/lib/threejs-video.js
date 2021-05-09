@@ -1,5 +1,10 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
+
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing//UnrealBloomPass.js';
+
 // import image from '/images/texture.png';
 
 const vertexShader = `
@@ -84,7 +89,7 @@ vec3 curlNoise( vec3 p ){
 void main() {
   vUv = uv;
 
-  vec3 distortion = hoverState * vec3(position.x * 2., position.y, 1.)*curlNoise(vec3(position.x * 0.002 + time * 0.05,position.y * 0.008,time*0.05));
+  vec3 distortion = hoverState * vec3(position.x * 2., position.y, 1.)*curlNoise(vec3(position.x * 0.004 + time * 0.005,position.y * 0.004,time*0.02));
   vec3 finalPosition = position + distortion;
 
   vec4 mvPosition = modelViewMatrix * vec4( finalPosition, 1 );
@@ -120,6 +125,14 @@ export default class Video {
         this.renderer.setClearColor(0xeeeeee, 1);
         this.container.appendChild(this.renderer.domElement);
         this.el = document.querySelector('.nav__holo');
+        this.timeline = gsap.timeline();
+        this.settings = {
+          bloomThreshold: 1,
+          bloomStrength: 6,
+          bloomRadius: 2
+        }
+
+
 
         this.camera = new THREE.PerspectiveCamera(
           70,
@@ -135,6 +148,8 @@ export default class Video {
         this.time = 0;
 
         this.isPlaying = true;
+
+        this.addPost();
 
         this.addObjects();
         this.resize();
@@ -156,6 +171,7 @@ export default class Video {
         this.renderer.setSize(this.width, this.height);
         this.camera.aspect = this.width / this.height;
         this.camera.updateProjectionMatrix();
+        this.composer.setSize(this.width, this.height);
       }
 
       addObjects() {
@@ -182,21 +198,42 @@ export default class Video {
         this.plane = new THREE.Points(this.geometry, this.material);
         this.scene.add(this.plane);
 
+        // To future Eric.... use gallery like function passing different image during peak of animation so
+        // on 'mouseleave' it will show a different image.
         this.el.addEventListener('mouseenter', () => {
-          gsap.to(this.material.uniforms.hoverState, {
+          this.timeline.to(this.material.uniforms.hoverState, {
               duration: 0.6,
               value: 1
-          })
+          }).to(this.material.uniforms.hoverState, {
+            duration: 0.6,
+            delay: 2,
+            value: 0
+        })
       })
 
 
-      this.el.addEventListener('mouseleave', () => {
-          // this.mesh.rotation.z = Math.PI / 1;
-          gsap.to(this.material.uniforms.hoverState, {
-              duration: 0.6,
-              value: 0
-          })
-      })
+
+
+      // this.el.addEventListener('mouseleave', () => {
+      //     // this.mesh.rotation.z = Math.PI / 1;
+      //     gsap.to(this.material.uniforms.hoverState, {
+      //         duration: 0.6,
+      //         value: 0
+      //     })
+      // })
+      }
+
+      addPost() {
+        this.renderScene = new RenderPass(this.scene, this.camera);
+        this.bloomPass = new UnrealBloomPass(new THREE.Vector2( window.innerWidth, window.innerHeight),1.5, 0.4, 0.84);
+
+        this.bloomPass.threshold = this.settings.bloomThreshold;
+        this.bloomPass.strength = this.settings.bloomStrength;
+        this.bloomPass.radius = this.settings.bloomRadius;
+
+        this.composer = new EffectComposer( this.renderer );
+        this.composer.addPass(this.renderScene);
+        this.composer.addPass(this.bloomPass);
       }
 
       stop() {
@@ -215,6 +252,7 @@ export default class Video {
         this.time += 0.05;
         this.material.uniforms.time.value = this.time;
         requestAnimationFrame(this.render.bind(this));
-        this.renderer.render(this.scene, this.camera);
+        // this.renderer.render(this.scene, this.camera);
+        this.composer.render();
       }
 }
