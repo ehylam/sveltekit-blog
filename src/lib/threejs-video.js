@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import gsap from 'gsap';
-import image from '/images/texture.png';
+// import image from '/images/texture.png';
 
 const vertexShader = `
 uniform float time;
@@ -96,14 +96,13 @@ void main() {
 
 const fragmentShader = `
 varying vec2 vUv;
-uniform sampler2D t;
+// uniform sampler2D t;
 varying vec3 vPosition;
 
 void main()	{
     // texture2D({texel}, {coord})
-    vec4 tt = texture2D(t, vUv); // returns a texel (colour) of the texture for the given coordinates.
+    // vec4 tt = texture2D(t, vUv); // returns a texel (colour) of the texture for the given coordinates.
 	gl_FragColor = vec4(vUv,0.,1.);
-	gl_FragColor = tt;
 }
 `;
 
@@ -168,7 +167,7 @@ export default class Video {
           side: THREE.DoubleSide,
           uniforms: {
             time: { value: 0 },
-            texture: { value: new THREE.TextureLoader().load(image) },
+            // texture: { value: new THREE.TextureLoader().load(image) },
             resolution: { value: new THREE.Vector4() },
             hoverState: { value: 0 }
           },
@@ -185,7 +184,7 @@ export default class Video {
 
         this.el.addEventListener('mouseenter', () => {
           gsap.to(this.material.uniforms.hoverState, {
-              duration: 1,
+              duration: 0.6,
               value: 1
           })
       })
@@ -194,7 +193,7 @@ export default class Video {
       this.el.addEventListener('mouseleave', () => {
           // this.mesh.rotation.z = Math.PI / 1;
           gsap.to(this.material.uniforms.hoverState, {
-              duration: 1,
+              duration: 0.6,
               value: 0
           })
       })

@@ -13,7 +13,7 @@
 
 <div class="video"></div>
 
-<img class="jp" src="/images/texture.png" alt="jp">
+<!-- <img class="jp" src="/images/texture.png" alt="jp"> -->
 <style lang="scss">
     .video {
         position: fixed;
