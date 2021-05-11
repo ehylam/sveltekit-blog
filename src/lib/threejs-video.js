@@ -122,14 +122,16 @@ export default class Video {
         this.renderer = new THREE.WebGLRenderer();
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.renderer.setSize(this.width, this.height);
-        this.renderer.setClearColor(0xeeeeee, 1);
+        this.renderer.setClearColor(0xffffff, 0);
         this.container.appendChild(this.renderer.domElement);
         this.el = document.querySelector('.nav__holo');
         this.timeline = gsap.timeline();
         this.settings = {
-          bloomThreshold: 1,
-          bloomStrength: 6,
-          bloomRadius: 2
+          bloomThreshold: 0,
+          bloomStrength: 1.5,
+          bloomRadius: 1,
+          exposure: 1.1
+
         }
 
 
@@ -204,7 +206,8 @@ export default class Video {
           this.timeline.to(this.material.uniforms.hoverState, {
               duration: 0.6,
               value: 1
-          }).to(this.material.uniforms.hoverState, {
+          })
+          .to(this.material.uniforms.hoverState, {
             duration: 0.6,
             delay: 2,
             value: 0
@@ -230,6 +233,7 @@ export default class Video {
         this.bloomPass.threshold = this.settings.bloomThreshold;
         this.bloomPass.strength = this.settings.bloomStrength;
         this.bloomPass.radius = this.settings.bloomRadius;
+        // this.bloomPass.exposure = this.settings.exposure;
 
         this.composer = new EffectComposer( this.renderer );
         this.composer.addPass(this.renderScene);
