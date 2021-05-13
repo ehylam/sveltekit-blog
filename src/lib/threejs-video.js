@@ -126,14 +126,6 @@ export default class Video {
         this.container.appendChild(this.renderer.domElement);
         this.el = document.querySelector('.nav__holo');
         this.timeline = gsap.timeline();
-        this.settings = {
-          bloomThreshold: 1,
-          bloomStrength: 1.5,
-          bloomRadius: 1,
-          exposure: 1.1
-
-        }
-
 
 
         this.camera = new THREE.PerspectiveCamera(
@@ -152,7 +144,6 @@ export default class Video {
         this.isPlaying = true;
 
         this.addPost();
-
         this.addObjects();
         this.resize();
         this.render();
@@ -202,38 +193,39 @@ export default class Video {
 
         // To future Eric.... use gallery like function passing different image during peak of animation so
         // on 'mouseleave' it will show a different image.
+
+        // Bug: TODO - Prevent stacked mouse enters
         this.el.addEventListener('mouseenter', () => {
           this.timeline.to(this.material.uniforms.hoverState, {
-              duration: 0.6,
+              duration: 1,
               value: 1
+          })
+          .to(this.bloomPass, {
+            duration: 1,
+            strength: 1
+          },0.2)
+          .to(this.bloomPass, {
+            duration: 0.6,
+            strength: 0,
+            delay: 2
           })
           .to(this.material.uniforms.hoverState, {
             duration: 0.6,
-            delay: 2,
             value: 0
+          })
         })
-      })
 
 
-
-
-      // this.el.addEventListener('mouseleave', () => {
-      //     // this.mesh.rotation.z = Math.PI / 1;
-      //     gsap.to(this.material.uniforms.hoverState, {
-      //         duration: 0.6,
-      //         value: 0
-      //     })
-      // })
       }
 
       addPost() {
         this.renderScene = new RenderPass(this.scene, this.camera);
         this.bloomPass = new UnrealBloomPass(new THREE.Vector2( window.innerWidth, window.innerHeight),1.5, 0.4, 0.84);
 
-        this.bloomPass.threshold = this.settings.bloomThreshold;
-        this.bloomPass.strength = this.settings.bloomStrength;
-        this.bloomPass.radius = this.settings.bloomRadius;
-        // this.bloomPass.exposure = this.settings.exposure;
+        this.bloomPass.threshold = 0;
+        this.bloomPass.strength = 0;
+        this.bloomPass.radius = 0;
+        this.bloomPass.exposure = 1;
 
         this.composer = new EffectComposer( this.renderer );
         this.composer.addPass(this.renderScene);

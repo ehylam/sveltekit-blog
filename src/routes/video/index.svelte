@@ -10,7 +10,7 @@
     })
 </script>
 
-<div class="video-el"></div>
+<div class="image"></div>
 <div class="video"></div>
 
 <!-- <img class="jp" src="/images/texture.png" alt="jp"> -->
@@ -24,7 +24,7 @@
         z-index: 1;
     }
 
-    .video-el {
+    .image {
         position: fixed;
         top: 50%;
         left: 50%;
