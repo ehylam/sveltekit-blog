@@ -127,7 +127,7 @@ export default class Video {
         this.el = document.querySelector('.nav__holo');
         this.timeline = gsap.timeline();
         this.settings = {
-          bloomThreshold: 0,
+          bloomThreshold: 1,
           bloomStrength: 1.5,
           bloomRadius: 1,
           exposure: 1.1
@@ -195,7 +195,7 @@ export default class Video {
           fragmentShader: fragmentShader
         });
 
-        this.geometry = new THREE.PlaneGeometry(300* 1.4, 150 * 1.4, 300, 150);
+        this.geometry = new THREE.PlaneGeometry(300* 2.77, 150 * 2.75, 300, 150);
 
         this.plane = new THREE.Points(this.geometry, this.material);
         this.scene.add(this.plane);
