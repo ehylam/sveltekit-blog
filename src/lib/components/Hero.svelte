@@ -13,6 +13,19 @@
 		hovering = false;
 	}
 
+	// TODO: split text and append inline style with css variable containing the index of the loop
+
+	// Hello don't mind just practicing with a split keyboard and playing around with github copilot!
+
+	//ME: hello Github Copilot!
+	//Github Copilot: hello ME!
+	//ME: hello Github Copilot!
+	//Github Copilot: hello ME!
+	//ME: hello Github Copilot!
+	//Github Copilot: hello ME!
+
+
+
 	onMount(() => {
 		gsap.to('.hero__heading span span', {
 			rotate: '0deg',
